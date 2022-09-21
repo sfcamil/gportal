@@ -1,0 +1,29 @@
+grant select on table geps.versioned_trans to webmed;
+grant select on table geps.transaction to webmed;
+grant select on table geps.versioned_trans_context to webmed;
+grant select on table geps.vt_document to webmed;
+
+permision usage sur geps for webmed
+
+
+-- webmed."v1$all_dmi_documents" source
+
+CREATE OR REPLACE VIEW webmed."v1$all_dmi_documents"
+AS SELECT vd.o_id AS doc_o_id,
+    e.o_id AS entr_o_id,
+    e.code AS entr_code,
+    e.nom AS entr_nom,
+    t.o_id AS trav_o_id,
+    vdl.label,
+    tr.dt_trans AS transaction,
+    labellang(vt.trans_type, 'F'::character varying) AS tram,
+    sign((((('{"sub":"'::text || ((vd.o_id::text || '-F.'::text) || vd.extension::text)) || '","exp":'::text) || date_part('epoch'::text, CURRENT_TIMESTAMP + '01:00:00'::interval)::bigint::text) || '}'::text)::json, '9cIAbUXVBE'::text, 'HS512'::text) AS token
+   FROM geps.versioned_trans vt
+     JOIN geps.transaction tr ON tr.owner = vt.o_id
+     JOIN geps.versioned_trans_context vtc ON vtc.owner = vt.o_id
+     JOIN trav t ON t.o_id = vtc.target
+     JOIN entreprise e ON e.o_id = t.entreprise
+     JOIN geps.vt_document vd ON vd.owner = vt.o_id
+     JOIN vt_document_labels vdl ON vdl.owner = vd.o_id
+     LEFT JOIN ehr_document_type dt ON dt.o_id = vd.document_type
+  WHERE vt.is_active = 'Y'::bpchar AND tr.is_active = 'Y'::bpchar AND (dt.code::text = ANY (ARRAY['FA'::character varying::text, 'DOCADMIN'::character varying::text]));

@@ -1,0 +1,47 @@
+<?php
+
+function gepsis_update_9009() {
+    // $schema = Database::getConnection()->schema();
+    $schema = \Drupal::database()->schema();
+
+    if (!$schema->tableExists('geps_subusers')) {
+        $schema->schema()->createTable('geps_subusers', gepsis_schema());
+    }
+}
+
+function gepsis_schema() {
+    $specs = [];
+    $specs['geps_subusers'] = [
+        'description' => 'Table for storing information about subusers relations.',
+        'fields' => [
+            'oid' => [
+                'type' => 'serial',
+                'not null' => TRUE,
+                'description' => 'Primary Key: Unique aggregator static ID',
+            ],
+            'uid' => [
+                'type' => 'int4',
+                'not null' => TRUE,
+                'default' => '',
+                'description' => 'Owner',
+            ],
+            'vid' => [
+                'type' => 'int4',
+                'not null' => TRUE,
+                'default' => '',
+                'description' => 'Subuser',
+            ],
+            'created' => [
+                'description' => 'created date',
+                'type' => 'int4',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => '',
+            ],
+        ],
+        'primary key' => ['uid', 'vid'],
+    ];
+    $schema = Database::getConnection()->schema();
+    $schema->createTable('geps_subusers', $specs);
+    
+}

@@ -1,0 +1,6 @@
+gepsis.jasperServer:
+  path: 'http://jasper.yosys.ro'
+  requirements:
+    _permission: 'access content'
+
+

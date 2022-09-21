@@ -1,0 +1,61 @@
+gepsis.autocomplete.adherents:
+  path: 'autocomplete/adherents'
+  defaults:
+    _controller: '\Drupal\gepsis\Controller\AdherentsAutoCompleteController::handleAutocomplete'
+    _format: json
+  requirements:
+    _permission: 'access content'
+
+gepsis.autocomplete:
+  path: 'autocomplete/poste'
+  defaults:
+    _controller: '\Drupal\gepsis\Controller\AutoCompleteController::handleAutocomplete'
+    _format: json
+  requirements:
+    _permission: 'access content'
+
+gepsis.calculate_risk_pers_details:
+  path: '/calculate_risk_pers_details'
+  defaults:
+    _controller: '\Drupal\gepsis\Controller\CalculRiskSalarie::tarbes_calculate_risk_period_pers_details'
+    _format: json
+  requirements:
+    _permission: 'access content'
+
+gepsis.jasperReportCall:
+  path: '/rapportsAdherent'
+  defaults:
+    _controller: '\Drupal\gepsis\Controller\JasperReportCall::callCurlJasperReport'
+    _title: 'Rapports adherent'
+  requirements:
+    _permission: 'access content'
+
+gepsis.subuser_permission_check:
+  path: '/user/{user}/subuser/delete'
+  defaults:
+    _title: 'Subuser Delete Permission Check'
+  requirements:
+    _custom_access: '\Drupal\gepsis\Controller\SubuserPermissions::checkUserDeleteAccess'
+
+gepsis.subuser_edit_permission_check:
+  path: '/user/{user}'
+  defaults:
+    _title: 'Subuser Edit Permission Check'
+  requirements:
+    _custom_access: '\Drupal\gepsis\Controller\SubuserPermissions::checkUserEditAccess'
+
+gepsis.ajax_callback:
+  path: '/open-modal'
+  defaults:
+    _controller: '\Drupal\gepsis\Controller\AjaxController:openModalForm'
+  requirements:
+    _permission: 'access content'
+
+gepsis.admin_upload:
+  path: '/admin/people/import'
+  defaults:
+    _controller: '\Drupal\gepsis\Controller\ImportUsersController::importPage'
+    _title: 'Import users'
+  requirements:
+    _permission: 'administer users'
+

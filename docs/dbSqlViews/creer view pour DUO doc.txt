@@ -1,0 +1,36 @@
+as root
+
+git clone https://github.com/michelp/pgjwt
+cd pgjwt
+sudo make install
+
+
+
+psql -U postgres -d ocara
+attention dans la bonne DB (ici ocara)
+
+
+create EXTENSION pgcrypto SCHEMA public;
+create EXTENSION pgjwt SCHEMA public;
+
+don't forget de IP og Geps for apache proxy
+
+dans webmed:
+
+CREATE OR REPLACE VIEW webmed."v1$all_duo_documents"
+AS SELECT vd.o_id AS doc_o_id,
+    e.o_id AS entr_o_id,
+    e.code AS entr_code,
+    e.nom AS entr_nom,
+    vdl.label,
+    tr.dt_trans AS transaction,
+    labellang(vt.trans_type, 'F'::character varying) AS tram,
+    sign((((('{"sub":"'::text || ((vd.o_id::text || '-F.'::text) || vd.extension::text)) || '","exp":'::text) || date_part('epoch'::text, CURRENT_TIMESTAMP + '01:00:00'::interval)::bigint::text) || '}'::text)::json, '9cIAbUXVBE'::text, 'HS512'::text) AS token
+   FROM versioned_trans vt
+     JOIN transaction tr ON tr.owner = vt.o_id
+     JOIN ehr_base eb ON eb.o_id = vt.owner
+     JOIN dm_entreprise dm ON dm.o_id = eb.person
+     JOIN entreprise e ON e.o_id = dm.owner
+     JOIN vt_document vd ON vd.owner = vt.o_id
+     JOIN vt_document_labels vdl ON vdl.owner = vd.o_id
+  WHERE vt.is_active = 'Y'::bpchar AND tr.is_active = 'Y'::bpchar;

@@ -1,0 +1,27 @@
+services:
+  gepsis.GepsisOdataReadClass:
+    class: Drupal\gepsis\Controller\GepsisOdataReadClass
+    
+  gepsis.GepsisOdataWriteClass:
+    class: Drupal\gepsis\Controller\GepsisOdataWriteClass
+
+  twig_extension.function:
+    class: Drupal\gepsis\Controller\GetLinkFacturesAll
+    tags:
+      - { name: twig.extension }
+
+  gepsis.event_subscriber:
+    class: Drupal\gepsis\Controller\InitSubscriber
+    tags:
+      - { name: event_subscriber }
+
+  gepsis.redirect_subscriber:
+    class: Drupal\gepsis\Controller\RedirectSubscriber
+    tags:
+      - { name: event_subscriber }
+
+
+  gepsis.breadcrumb_nodes:
+    class: Drupal\gepsis\Breadcrumb\GepsisBreadcrumbBuilder
+    tags:
+      - { name: breadcrumb_builder, priority: 100000 }

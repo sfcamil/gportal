@@ -1,0 +1,60 @@
+      
+      
+         https://community.jaspersoft.com/wiki/php-client-sample-code#Running_a_Report
+         JS visualize
+         https://community.jaspersoft.com/documentation/tibco-jasperreports-server-visualizejs-guide/v790/api-reference-report#Getting_the_Embed_Code
+
+         loggin error
+         https://community.jaspersoft.com/wiki/cannot-log-internal-users-after-configuring-cas-authentication-51-52-55
+
+         https://community.jaspersoft.com/wiki/how-disable-login-page-external-network-or-domain
+         https://community.jaspersoft.com/wiki/enable-rest-api-logging-jasperreports-server
+         https://community.jaspersoft.com/wiki/visualizejs-how-identify-ad-hoc-parameter-filter-name-and-pass-values
+         https://community.jaspersoft.com/documentation/tibco-jasperreports-server-administrator-guide/v640/configuration-using-proxies
+         https://community.jaspersoft.com/wiki/best-practices-deploying-jasperreports-server-your-web-application
+         https://community.jaspersoft.com/wiki/sample-using-visualizejs-load-resources-vuejs-application
+         https://community.jaspersoft.com/wiki/php-client-wordpress-example
+         https://community.jaspersoft.com/wiki/how-disable-login-page-external-network-or-domain
+         https://sangatpedas.com/20121128/filter-access-to-tomcat-based-on-ip-behind-proxy-server/
+        
+        Examples: https://github.com/TIBCOSoftware/js-visualize#jsfiddle-samples
+TOMCAT        
+		1. Change the directory name of the <tomcat>/webapps/jasperserver to <tomcat>/stats/mynewname.
+		2. Open <tomcat>/webapps/mynewname/WEB-INF/web.xml and change this element:
+				FROM: <param-value>jasperserver.root</param-value>     TO: <param-value>stats.root</param-value>
+		3. Delete <tomcat>\\conf\\Catalina\\localhost\\jasperserver.xml.
+		4. Delete <tomcat>\\work directory.
+		5. Restart Tomcat.      
+
+APACHE
+		ProxyRequests Off
+		ProxyPreserveHost On
+		ProxyPass /stats http://127.0.0.1:8085/stats
+        # ProxyPassReverse /stats http://127.0.0.1:8085/stats
+        
+NGINX
+
+	location /stats {
+       proxy_pass http://10.220.18.1:8085/stats;
+	   # proxy_set_header X-Forwarded-Proto "https";
+	   proxy_set_header Host $host;
+       proxy_set_header X-Forwarded-For $host;
+       proxy_set_header X-Forwarded-Proto $scheme;
+       proxy_set_header X-Real_IP $remote_addr;
+
+    }
+        
+        
+FILTER (/opt/jasperreports-server-7.2.0/apache-tomcat/webapps/stats/WEB-INF/web.xml)
+     <filter>
+		<filter-name>Remote Address Filter</filter-name>
+		<filter-class>org.apache.catalina.filters.RemoteAddrFilter</filter-class>
+		<init-param>
+			<param-name>allow</param-name> <!-- or deny -->
+			<param-value>192\.168\.[0-9]{1,3}\.[0-9]{1,3}|10\.0\.0\.[0-9]{1,3}|127\.0\.0\.1</param-value> <!-- regexp for your ip addresses -->
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>Remote Address Filter</filter-name>
+		<url-pattern>/*</url-pattern> <!-- the url of your admin page or login page, etc -->
+	</filter-mapping>

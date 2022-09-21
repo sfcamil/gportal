@@ -1,0 +1,104 @@
+-- PHP --
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:ondrej/php
+apt update
+
+apt install libapache2-mod-php libapache2-mod-php8.0 php php-bcmath php-bz2 php-cli php-curl php-dev php-fpm php-gd php-intl php-json php-mbstring php-mysql \
+php-pear php-pgsql php-phpmyadmin-sql-parser php-soap php-tidy php-twig php-twig-i18n-extension php-xml php-zip php8.0 php8.0-bcmath php8.0-bz2 php8.0-cli \
+php8.0-common php8.0-curl php8.0-dev php8.0-fpm php8.0-gd php8.0-intl php8.0-mbstring php8.0-mysql php8.0-opcache php8.0-pgsql php8.0-readline \
+php8.0-soap php8.0-tidy php8.0-xml php8.0-zip pkg-php-tools
+
+
+sudo apt install php8.0 libapache2-mod-php8.0 php8.0-fpm libapache2-mod-fcgid php8.0-gd php8.0-pgsql
+
+
+tar xvfz jdk-8u121-linux-x64.tar.gz
+mkdir -p /usr/lib/jvm
+mv jdk1.8.0_121 /usr/lib/jvm/
+sudo update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/jdk1.8.0_121/bin/java" 1
+sudo update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/jvm/jdk1.8.0_121/bin/javac" 1
+sudo update-alternatives --install "/usr/bin/javaws" "javaws" "/usr/lib/jvm/jdk1.8.0_121/bin/javaws" 1
+sudo chmod a+x /usr/bin/java
+sudo chmod a+x /usr/bin/javac
+sudo chmod a+x /usr/bin/javaws
+sudo chown -R root:root /usr/lib/jvm/jdk1.8.0_121
+sudo update-alternatives --config java
+sudo update-alternatives --config javac
+sudo update-alternatives --config javaws
+
+mkdir /opt/wildfly
+useradd -d /opt/wildfly jboss -s /bin/bash
+chown jboss /opt/wildfly/ -R
+tar -xvf wildfly-9.0.2.Final.tar
+mv wildfly-9.0.2.Final/* /opt/wildfly/
+cp /opt/wildfly/bin/init.d/wildfly.conf /etc/default/
+
+a2enmod proxy_fcgi setenvif
+a2enmod headers
+sudo a2enmod rewrite
+
+
+/user/login?current=/accueil
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+password_encryption = md5
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Composer problem: Your Composer dependencies require a PHP version ">= 8.1.0
+Add this lines in composer.json file:
+{
+    "config": {
+        "platform-check": false
+    }
+}
+And run composer dump-autoload
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        "composer/installers": "^1.9",
+        "drupal-ckeditor-plugin/colorbutton": "^4.16",
+        "drupal-ckeditor-plugin/font": "^4.16",
+        "drupal-ckeditor-plugin/panelbutton": "^4.16",
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CREATE DATABASE gportal
+    WITH
+    OWNER = gportal
+    ENCODING = 'UTF8'
+    CONNECTION LIMIT = -1;
+
+pg_dump --verbose --host 127.0.0.1 -U postgres --format=plain  --file=ostra.portail.users.sql ostra.progeps
+psql --host 127.0.0.1 -U postgres ostra.progeps < ostra.portail.users.sql
+
+
+30 21 *  *  *   /var/lib/postgresql/autopgsqlbackup.sh 2>&1
+0 1 * * * /root/backupScripts/backup.sh &> /dev/null
+
+
+[root@postgres ~]# vim /var/lib/postgres/.pgpass
+localhost:*:*:postgres:17!Postra
+
+
+chmod 600 /var/lib/postgresql/.pgpass
+
+17!Astral
+
+
+mkdir /home/backups/postgres
+chown postgres:postgres  /home/backups/postgres
+chown postgres:postgres  /var/lib/postgresql/autopgsqlbackup.sh
+chmod +x /var/lib/postgresql/autopgsqlbackup.sh
+
+
+
+
+ALTER USER postgres WITH PASSWORD '17!Astral';
+
+http://cvs.yosys.ro:8888/direct/vvi-dmist-client.ear
+http://cvs.yosys.ro:8888/direct/vvi-dmist-server.ear
+http://cvs.yosys.ro:8888/direct/vvi-portal-gateway-server.ear
+
+
+30 21 *  *  *   /var/lib/pgsql/backups/autopgsqlbackup.sh 2>&1
+
+
+pg_dump --no-owner --no-acl -v -f gportal9.sql gportal9
+ psql -d gportal < gportal9.sql

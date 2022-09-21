@@ -1,0 +1,187 @@
+/*  DEMANDE RDV SELECT SAL TO LARGE */
+#edit_selectionner_un_salarie_chosen {
+    width: 100% !important;
+}
+
+
+/*  PAGE RAPPORTS */
+.rapport_container {
+    display: flex;
+    /* flex-flow: row wrap; */
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+.rapport_item {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-basis: calc(16.66% - 10px);
+}
+
+html, body, #rapport_container, #edit-processed-rapport {
+    display: block;
+    width: 100%;
+    height: 1000px;
+    border: 0px;
+    margin: 0 auto;
+}
+
+/*  VIEWS PREVIEW PAGE */
+.webform-preview .title-preview {
+    font-weight: normal !important;
+}
+
+.webform-preview .title-preview:after {
+    content: ": ";
+}
+
+.webform-preview .fieldset-legend {
+    display: none;
+}
+
+/*  VIEWS HEAD TABLE LINK SORT */
+.view-content thead tr th {
+    color: #262626;
+}
+
+.view-content thead tr th a {
+    color: #262626;
+    text-decoration: underline;
+}
+
+.view-content thead tr th a:hover {
+    color: #d2dbe0;
+}
+
+/*  DISABLED INPUT */
+input[type="text"][disabled] {
+    background: #e6e6e6;
+}
+
+/*  PDF VIEWER */
+.node-page.view-mode-full .field-name-field-pdf-reader .field-item {
+    width: 100% !important;
+}
+
+/*  RISQUES EN TWO COLUMNS */
+@media (max-width: 375px) {
+    .risques_columns {
+        column-count: 1;
+        -moz-column-count: 1;
+        -webkit-column-count: 1;
+    }
+}
+
+@media (min-width: 376px) and (max-width: 575px) {
+    .risques_columns {
+        column-count: 1;
+        -moz-column-count: 1;
+        -webkit-column-count: 1;
+    }
+}
+
+@media (min-width: 576px) {
+    .risques_columns {
+        column-count: 2;
+        -moz-column-count: 2;
+        -webkit-column-count: 2;
+    }
+}
+
+/*  CHANGE ADH ACTIF */
+.td-select-adherent-primary {
+    width: 80% !important;
+}
+
+.td-select-adherent-secundary {
+    display: inline-block !important;
+    width: 400px;
+    margin-right: 20px !important;
+}
+
+/******************************/
+
+.chosen-container {
+    font-size: 18px;
+}
+
+.site-name-link {
+    font-family: 'Bree Serif', serif;
+}
+
+/* liste travs avec statuts innactifs */
+.view-v1-entr-travs .N {
+    background-color: rgba(250, 128, 114, 0.5) !important;
+}
+
+/**
+ * @file
+ * Front-end styling for the display of webforms.
+ */
+input.webform-calendar {
+    display: none;
+    padding: 3px;
+    vertical-align: top;
+}
+
+html.js input.webform-calendar {
+    display: inline;
+}
+
+.highlight {
+    background-color: #555bbb;
+}
+
+#main-container {
+    min-height: 500px !important;
+}
+
+legend {
+    font-size: 1em;
+}
+
+
+#edit_sal_type_voie_chosen, #edit_sal_country_chosen {
+    width: 100% !important;
+}
+
+.w3-section .js-form-item .form-item .js-form-type-select .form-type-select .js-form-item-sal-title-select .form-item-sal-title-select .form-no-label .form-disabled {
+    margin-top: 0 !important;
+}
+
+.select2-container--default .select2-selection--single {
+    width: 100% !important;
+    height: 100%;
+    padding: 6px;
+    box-shadow: inset 0 0 5px rgb(51 44 51/ 10%);
+    background-color: #fff;
+    border: 1px solid #eaeaea !important;
+    border-radius: unset;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 100%;
+}
+
+.chosen-container-single .chosen-single {
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+
+#edit_sal_type_voie_chosen, #edit_sal_country_chosen {
+    margin-top: 4px;
+}
+
+.form-select {
+    box-shadow: inset 0 0 5px rgb(51 44 51/ 10%);
+    background-color: #fff;
+    border: 1px solid #eaeaea !important;
+    border-radius: unset;
+}
+
+.layout--onecol .layout__region, .bs-mb-1 {
+    margin-bottom: 30px !important;
+}

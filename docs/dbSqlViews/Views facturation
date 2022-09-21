@@ -1,0 +1,88 @@
+CREATE OR REPLACE FUNCTION vvi.get_invoice_periode_title(p_collected_info_category bigint, p_start_date date, p_end_date date, p_temporal_target_type_generation character varying, p_invoice_date date)
+ RETURNS text
+ LANGUAGE plpgsql
+ STABLE
+AS $function$
+----------------|---------------|----------------------------------------------------------------------------------------------------------------
+-- Author	|Date		|Observation
+----------------|---------------|----------------------------------------------------------------------------------------------------------------
+--	lc	|  2018.12.11	| EDITION FACTURATION
+--              |               |
+--              |               |En dessous de votre référence il faut ajouter la ligne :
+--              |               |
+--              |               |Période : YYx99
+--              |               |
+--              |               |càd
+--              |               |	YY = année soit par exemple 18
+--              |               |
+--              |               |	x = A,S,T,M (Anuuel,Semestriel,Trimestriel,Mensuel)
+--              |               |
+--              |               |	99 = pour A 01, pour S 01 ou 02, pour T 01,02,03,04, pour M 01à12
+--              |               |Période : - For One time
+----------------|---------------|----------------------------------------------------------------------------------------------------------------
+--	lc	|  2019.01.11	|NW PERIOD for ORAD is YYA01 and no mre "-" YY equal the YY of the date of the invoice
+----------------|---------------|----------------------------------------------------------------------------------------------------------------
+--	lc	|  2019.01.28	|FIX for all collect OCXXXXXX for the YY of period the rule is:
+--              |               |	YY of the collect + 1 > so the collect is year 2018 the ERIOD must be 18+1 =19
+--              |               |	Sorry for this misunderstanding from my part
+----------------|---------------|----------------------------------------------------------------------------------------------------------------
+--	lc	|  2019.11.05	|	add context forceStartDate to collected_info_category;
+----------------|---------------|----------------------------------------------------------------------------------------------------------------
+--              |               | Example: select vvi.get_invoice_periode_title(collected_info_category,start_date,end_date, temporal_target_type_generation,invoice_date::date) from epstrb.invoice;
+----------------|---------------|----------------------------------------------------------------------------------------------------------------
+DECLARE
+	-- nothing
+	v_add_yy		int:=coalesce((select vvi.get_context_value(context,'addYY')::int from collected_info_category where o_id=$1),0);
+	v_has_force_start_date 	boolean:=(select vvi.get_context_value(context,'forceStartDate') is not null from collected_info_category where o_id=$1);
+	v_period_ref_date 	date:=(select case when v_has_force_start_date then p_end_date else p_start_date end);
+BEGIN
+	return
+		(lpad(mod(extract(year from (case when p_temporal_target_type_generation='O' then p_invoice_date else p_start_date end))::integer+v_add_yy,100)::text,2,'0'))||
+		(case
+			when p_temporal_target_type_generation='O' then 'A'
+			when p_temporal_target_type_generation='M' then 'M'
+			when p_temporal_target_type_generation='Q' then 'T'
+			when p_temporal_target_type_generation='S' then 'S'
+			when p_temporal_target_type_generation='Y' then 'A'
+		end)||
+		(case
+			when p_temporal_target_type_generation='O' then '01'
+			when p_temporal_target_type_generation='M' then lpad(extract(month from v_period_ref_date)::text,2,'0')
+			when p_temporal_target_type_generation='Q' then lpad(extract(QUARTER from v_period_ref_date)::text,2,'0')
+			when p_temporal_target_type_generation='S' then lpad((extract(month from v_period_ref_date)::integer/7+1)::text,2,'0')
+			when p_temporal_target_type_generation='Y' then '01'
+		end);
+end;
+$function$
+;
+
+
+-------------------------
+
+
+CREATE OR REPLACE VIEW webmed."v1$all_factures"
+AS SELECT epi.o_id AS oid,
+    epi.entreprise,
+    epi.year,
+    epi.invoice_number,
+    labellang(epi.collected_info_category::numeric, 'F'::bpchar) AS collected_info_category_label,
+    epi.invoice_type,
+        CASE
+            WHEN epi.invoice_type::text ~~ 'F'::text THEN 'Facture'::text
+            ELSE 'Avoir'::text
+        END AS invoice_type_text,
+    get_invoice_periode_title(epi.collected_info_category, epi.start_date, epi.end_date, epi.temporal_target_type_generation, epi.invoice_date::date, epi.period_title) AS invoice_period_text,
+    epi.accounting_period,
+    epi.total_amount,
+    epi.total_tax_amount,
+    epi.total_ttc_amount,
+    epi.flag_accounting,
+    epi.invoice_date,
+    epi.status,
+    epi.due_date,
+    epi.is_payed,
+    epi.is_closed,
+    encode(epi.invoice_as_report_pdf, 'base64'::text) AS invoice_as_report_pdf_txt
+   FROM invoice epi
+  WHERE epi.invoice_number > 0;
+

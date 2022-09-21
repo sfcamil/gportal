@@ -1,0 +1,62 @@
+global-styling:
+  version: 1.x
+  css:
+    theme:
+      css/global-styling.css: {}
+
+startPage:
+  version: 1.x
+  css:
+    theme:
+      css/startPage.css: {}
+      
+viewStartPage:
+  version: 1.x
+  css:
+    theme:
+      css/viewStartPage.css: {}
+   
+views-select-ligne:
+  version: 1.x
+  css:
+    theme:
+      css/viewsSelectLine.css: {}    
+  js:
+    js/views-select-ligne.js: {}
+
+gepsis.replace-autocomplete:
+  version: 1.0
+  js:
+    js/replace-autocomplete.js: {} 
+  dependencies:
+    - core/jquery
+
+calculPeriodicite:
+  version: 1.0
+  js:
+    js/calculPeriodicite.js: {} 
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal
+    - core/drupalSettings
+    - user/drupal.user.admin
+
+includeJasperForm:
+  version: 1.0
+  js:
+    https://gportal.ocara.com/stats/client/visualize.js: { type: external }
+    # https://gportal9/stats/client/visualize.js?_opt=true: { type: external, minified: true }
+    # js/visualize.js: {}
+    js/includeJasperForm.js: {}
+  dependencies:
+     - core/jquery
+     - core/jquery.once
+     - core/drupalSettings
+
+preprocessTabs:
+  version: 1.x
+  js:
+    js/preprocessTabs.js: {}
+  dependencies:
+    - core/jquery

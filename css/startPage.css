@@ -1,0 +1,238 @@
+
+
+.justify-content-center {
+  justify-content: center !important;
+}
+
+.cadre-conteneur .container .row {
+	--bs-gutter-x: 1.5rem;
+	--bs-gutter-y: 0;
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: calc(var(--bs-gutter-y) * -1);
+	margin-right: calc(var(--bs-gutter-x) * -.5);
+	margin-left: calc(var(--bs-gutter-x) * -.5);
+}
+
+.col-lg-3 {
+  flex: 0 0 auto;
+  width: 300px;
+}
+
+.bouton-conteneur .container .row {
+  --bs-gutter-x: 1.5rem;
+	--bs-gutter-y: 0;
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: calc(var(--bs-gutter-y) * -1);
+	margin-right: calc(var(--bs-gutter-x) * -.5);
+	margin-left: calc(var(--bs-gutter-x) * -.5);
+}
+
+
+
+
+.image-conteneur {
+  width: 100%;
+  height: 55vh;
+  background-image: url("https://www.tooltyp.com/wp-content/uploads/2014/10/1900x920-8-beneficios-de-usar-imagenes-en-nuestros-sitios-web.jpg");
+  background-color: white;
+  background-size: cover;
+}
+.image-conteneur .color-conteneur {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.image-conteneur .color-conteneur .titre-conteneur {
+  position: absolute;
+  bottom: 12%;
+  right: 6%;
+}
+.image-conteneur .color-conteneur .titre-conteneur h1 {
+  font-size: 3.5em;
+  color: white;
+}
+.image-conteneur .color-conteneur .titre-conteneur h2 {
+  font-size: 3em;
+  color: orange;
+}
+
+.bouton-conteneur {
+  width: 100%;
+}
+.bouton-conteneur .container .row {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.bouton-conteneur .container .row .col-12, .bouton-conteneur .container .row .col-md-4 {
+  position: relative;
+}
+.bouton-conteneur .container .row .col-12 .bouton, .bouton-conteneur .container .row .col-12 .bouton-hidd, .bouton-conteneur .container .row .col-md-4 .bouton, .bouton-conteneur .container .row .col-md-4 .bouton-hidd {
+  margin: 5px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: limegreen;
+}
+.bouton-conteneur .container .row .col-12 .bouton-hidd, .bouton-conteneur .container .row .col-md-4 .bouton-hidd {
+  background-color: grey;
+}
+.bouton-conteneur .container .row .col-12 .bouton a, .bouton-conteneur .container .row .col-12 .bouton-hidd a, .bouton-conteneur .container .row .col-md-4 .bouton a, .bouton-conteneur .container .row .col-md-4 .bouton-hidd a {
+  display: block;
+  text-align: center;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 20px;
+}
+.bouton-conteneur .container .row .col-12 .bouton:hover, .bouton-conteneur .container .row .col-12 .bouton-hidd:hover, .bouton-conteneur .container .row .col-md-4 .bouton:hover, .bouton-conteneur .container .row .col-md-4 .bouton-hidd:hover {
+  opacity: 0.75;
+}
+
+.cadre-conteneur {
+  width: 100%;
+}
+.cadre-conteneur .container .row .col-6 .cadre, .cadre-conteneur .container .row .col-md-3 .cadre, .cadre-conteneur .container .row .col-lg-4 .cadre {
+  margin: 1em;
+  height: 11em;
+  border: 1px solid;
+  border-radius: 10px;
+  position: relative;
+}
+.cadre-conteneur .container .row .col-6 .cadre a, .cadre-conteneur .container .row .col-md-3 .cadre a, .cadre-conteneur .container .row .col-lg-4 .cadre a {
+  display: block;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  color: white;
+}
+.cadre-conteneur .container .row .col-6 .cadre a:hover, .cadre-conteneur .container .row .col-md-3 .cadre a:hover, .cadre-conteneur .container .row .col-lg-4 .cadre a:hover {
+  color: white;
+}
+.cadre-conteneur .container .row .col-6 .cadre .cadre-texte, .cadre-conteneur .container .row .col-md-3 .cadre .cadre-texte, .cadre-conteneur .container .row .col-lg-4 .cadre .cadre-texte {
+  text-align: center;
+  width: calc(100% + 2px);
+  background-color: rgba(30, 30, 30, 0.65);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, 0%);
+  font-size: 0.8em;
+  color: white;
+
+}
+.cadre-conteneur .container .row .col-6 .cadre .cadre-texte h1, .cadre-conteneur .container .row .col-md-3 .cadre .cadre-texte h1, .cadre-conteneur .container .row .col-lg-4 .cadre .cadre-texte h1 {
+  font-size: 1.5em;
+  margin-bottom: 3px;
+}
+.cadre-conteneur .container .row .col-6 .cadre .cadre-texte:hover, .cadre-conteneur .container .row .col-md-3 .cadre .cadre-texte:hover, .cadre-conteneur .container .row .col-lg-4 .cadre .cadre-texte:hover {
+  color: white;
+}
+.cadre-conteneur .container .row .col-6 .cadre:hover, .cadre-conteneur .container .row .col-md-3 .cadre:hover, .cadre-conteneur .container .row .col-lg-4 .cadre:hover {
+  opacity: 0.75;
+}
+
+/* Adherent */
+.cadre-conteneur .container .row .col-6 #cadre-1, .cadre-conteneur .container .row .col-md-3 #cadre-1, .cadre-conteneur .container .row .col-lg-4 #cadre-1 {
+  background-color: white;
+  background-image: url("/sites/default/files/images/shutterstock_1551188402.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Salaries */
+.cadre-conteneur .container .row .col-6 #cadre-2, .cadre-conteneur .container .row .col-md-3 #cadre-2, .cadre-conteneur .container .row .col-lg-4 #cadre-2 {
+  background-color: white;
+  background-image: url("/sites/default/files/images/shutterstock_535567966.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Rendez-vous */
+.cadre-conteneur .container .row .col-6 #cadre-3, .cadre-conteneur .container .row .col-md-3 #cadre-3, .cadre-conteneur .container .row .col-lg-4 #cadre-3 {
+  background-color: white;
+  background-image: url("/sites/default/files/images/shutterstock_158320133.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* rapports */
+.cadre-conteneur .container .row .col-6 #cadre-4, .cadre-conteneur .container .row .col-md-3 #cadre-4, .cadre-conteneur .container .row .col-lg-4 #cadre-4 {
+  background-color: white;
+  background-image: url("/sites/default/files/images/shutterstock_1403134820.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* documents */
+.cadre-conteneur .container .row .col-6 #cadre-5, .cadre-conteneur .container .row .col-md-3 #cadre-4, .cadre-conteneur .container .row .col-lg-4 #cadre-4 {
+  background-color: white;
+  background-image: url("/sites/default/files/images/shutterstock_136964447.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* declaration annuelle */
+.cadre-conteneur .container .row .col-6 #cadre-6, .cadre-conteneur .container .row .col-md-3 #cadre-5, .cadre-conteneur .container .row .col-lg-4 #cadre-5 {
+  background-color: white;
+  background-image: url("/sites/default/files/images/shutterstock_185570417.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Contact service */
+.cadre-conteneur .container .row .col-6 #cadre-7, .cadre-conteneur .container .row .col-md-3 #cadre-6, .cadre-conteneur .container .row .col-lg-4 #cadre-6 {
+  background-color: white;
+  background-image: url("/sites/default/files/images/shutterstock_525480673.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Mon compte utilisateur */
+.cadre-conteneur .container .row .col-6 #cadre-8, .cadre-conteneur .container .row .col-md-3 #cadre-6, .cadre-conteneur .container .row .col-lg-4 #cadre-6 {
+  background-color: white;
+  background-image: url("/sites/default/files/images/shutterstock_117915073.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+.description-conteneur {
+  width: 100%;
+  margin-top: 10px;
+}
+.description-conteneur .contenu {
+  text-align: center;
+  position: relative;
+}
+.description-conteneur .contenu h1 {
+  color: orange;
+}
+.description-conteneur .contenu div p {
+  text-align: center;
+}
+.description-conteneur .contenu .contenu-texte {
+  margin: 10px;
+  padding: 10px;
+  text-align: justify;
+  background-color: gray;
+  color: white;
+}
+
+.form_text {
+  background-color: white;
+}
+
+/*# sourceMappingURL=style.css.map */

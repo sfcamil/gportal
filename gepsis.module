@@ -1,0 +1,307 @@
+<?php
+
+use Drupal\bootstrap\Utility\Unicode;
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Block\BlockPluginInterface;
+use Drupal\Core\Breadcrumb\Breadcrumb;
+use Drupal\gepsis\Controller\GepsisOdataReadClass;
+use Drupal\gepsis\Controller\UserLoginLogoutUtilities;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\user\Entity\User;
+use Drupal\views\ViewExecutable;
+use Drupal\Core\Access\AccessResult;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Drupal\gepsis\Controller\CronCreateNewUsersPortal;
+
+function gepsis_cron() {
+        CronCreateNewUsersPortal::process();
+}
+
+/**
+ * Implements hook_help().
+ */
+function gepsis_help($route_name, RouteMatchInterface $route_match) {
+
+    switch ($route_name) {
+        case 'help.page.gepsis' :
+            $output = '';
+            $output .= '<h3>' . t('About') . '</h3>';
+            $output .= '<p>' . t('Gepsis module for Geps') . '</p>';
+            return t($output);
+    }
+    return;
+}
+
+
+function gepsis_user_login(AccountInterface $account) {
+    // return;
+    if ($account->hasRole('adherent')) {
+        UserLoginLogoutUtilities::setupUserActiveAdherent($account);
+        UserLoginLogoutUtilities::setFlagActiveUser($account, 'login'); // write to Geps user IN
+        UserLoginLogoutUtilities::checkAndSetSessAdherentStatus($account);  // SET session status adherent (suspended, innactive ...)
+        UserLoginLogoutUtilities::checkAndSetSessFactEmail($account);  /// check contact facturation
+        // TODO
+        // setChildAdherents($account);
+    }
+    return;
+}
+
+function gepsis_user_logout(AccountInterface $account) {
+    UserLoginLogoutUtilities::setFlagActiveUser($account, 'logout');
+}
+
+function accessCallbackSubuserTab() {
+    $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+    $roles = $user->getRoles();
+    $usersubuser = $user->get('field_user_subuser')->value;
+    $access = FALSE;
+    if ($usersubuser == 0 && !empty(array_intersect(['adherent'], $user->getRoles()))) {
+        $access = TRUE;
+    }
+    return AccessResult::allowedIf($access);
+}
+
+/**
+ * Implements hook_user_cancel().
+ */
+function gepsis_entity_delete(EntityInterface $entity) {
+    $type = $entity->getEntityTypeId();
+    if ($entity->getEntityTypeId() == 'user') {
+        $id = $entity->id();
+        // delete from subusers table
+        $query = \Drupal::database()->delete('geps_subusers');
+        $query->condition('vid', $id);
+        $query->execute();
+
+        // if deleted a master then delete subusers also
+        $query = \Drupal::database()->query('SELECT vid from geps_subusers where uid = :value1', array(':value1' => $id));
+        $data = $query->fetchAll();
+
+        if ($data) {
+            foreach ($data as $value) {
+                user_cancel([], $value->vid, 'user_cancel_reassign');
+            }
+        }
+    }
+}
+
+
+function gepsis_theme($existing, $type, $theme, $path) {
+    return [
+        'jasperReportTheme' => [
+            'variables' => [
+                'response' => NULL /* , 'varname2' => NULL */
+            ]
+            // Declare all variables that you want to be able to pass to this template
+        ],
+    ];
+}
+
+/**
+ * Pass arguments to views.
+ */
+function gepsis_views_pre_view(ViewExecutable $view, $display_id, array &$args) {
+    switch ($view->id()) {
+        case 'v1_entr_travs' :
+        case 'v1_all_postes' :
+        case 'documents_dmi' :
+            if ($display_id === 'block_1') { // the machine name for your display
+                $route = \Drupal::routeMatch(); // get the current route
+                // $params = $route->getParameters(); // get the names of any parameters on the route
+                $args[0] = $route->getParameter('travOid'); // gets the value of a param, given that it exists in $params
+                break;
+            }
+    }
+}
+
+function gepsis_form_alter(&$form, &$form_state, $form_id) {
+    switch ($form_id) {
+        // Alter login form and add own custom submit handler.
+        case 'user_login_form':
+            // Add placeholders.
+            // $form['name']['#attributes']['placeholder'] = t('User name');
+            // $form['pass']['#attributes']['placeholder'] = t('Password');
+            $form['#submit'][] = '_gepsis_user_login_form_submit';
+            break;
+    }
+
+    return;
+    if (
+        isset($form['#webform_id']) &&
+        ($form['#webform_id'] == 'nouveau_salarie') &&
+        (isset($form['progress']['#current_page'])) &&
+        ($form['progress']['#current_page'] == 'webform_preview')
+    ) {
+        $preview_template = [
+            '#type' => 'inline_template',
+            // '#theme' => 'abc',
+            '#webform_submission' => $form_values,
+        ];
+        array_unshift($form['elements'], ['application_preview' => $preview_template]);
+    }
+}
+
+/**
+ * Custom submit handler for login form.
+ */
+function _gepsis_user_login_form_submit($form, FormStateInterface $form_state) {
+
+    return;
+    $url = Url::fromUri('internal:/accueil')->getRouteName();
+    $form_state->setRedirect($url);
+    return;
+
+    $url = Drupal\core\Url::fromUserInput('/accueil');
+    $form_state->setRedirectUrl($url);
+    return;
+
+    $form_state->setRedirect('<front>');
+    return;
+}
+
+function gepsis_preprocess_views_view_field(&$variables) {
+    $row = $variables['row'];
+    $result = $variables['view']->result;
+    $view = $variables['view'];
+    $field = $variables['field'];
+    if ($view->storage->id() == 'adherent_user_acces' && $field->field == 'otheruser') {
+        $otherUser = $row->adherentuseracces_otheruser;
+        $userLoaded = user_load_by_name(trim($otherUser));
+        $userMail = $userLoaded->get('mail')->value;
+        $adherent = $row->adherentuseracces_adherent;
+
+        $linkToGo = '<strong><a class="webform-dialog webform-dialog-narrow"';
+        // $linkToGo = $linkToGo . ' href="/codimth/confirm_delete/' . $view->current_display . '/' . $adherent . '/' . $otherUser . '">' . $otherUser;
+        // link to form
+        $linkToGo = $linkToGo . ' href="/form/acces-autres-utilisateurs?page=' . $view->current_display . '&adherent=' . $adherent . '&otheruser=' . $otherUser . '">' . $otherUser;
+        $linkToGo = $linkToGo . '</a></strong> (' . $userMail . ')';
+
+        $variables['output'] = [
+            '#markup' => $linkToGo,
+        ];
+    }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for page templates.
+ */
+function gepsis_preprocess_page(&$variables) {
+    // dpm($variables);
+    // kint($variables['page']['footer_fourt']['test']);
+    $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+    $variables['userIp'] = \Drupal::request()->getClientIp();
+    if ($user) $variables['userName'] = $user->get('name')->value;
+
+    // Add page preprocess functions here.
+    if ($variables['is_front'] == TRUE) {
+        $variables['#attached']['library'][] = 'gepsis/startPage';
+        // $variables['#attached']['library'][] = 'gepsis/tilewalls';
+        // $variables['#attached']['library'][] = 'gepsis/rfgrid';
+    }
+    //  UserLoginLogoutUtilities::redirectContactFacturationEmpty($user);
+}
+
+
+function gepsis_block_view_alter(array &$build, BlockPluginInterface $block) {
+    return;
+
+    // This will uppercase the block title.
+    $build['#configuration']['label'] = mb_strtoupper('OLAAAA');
+
+}
+
+function gepsis_preprocess_block(&$variables) {
+    $path = \Drupal::request()->getpathInfo();
+    $arg = explode('/', $path);
+    if (isset($arg[1]) && $arg[1] == 'v1-entr-adherent-contact') {
+        if ($variables['plugin_id'] == 'system_main_block') {
+
+            $variables['content']['#title']['#markup'] = 'Example test';
+
+        }
+    }
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function gepsis_page_attachments(array &$attachments) {
+    $path = \Drupal::service('path.current')->getPath();
+    if ($path == '/node/3' || $path == '/node/8') {
+        // TODO : pass parramaeters: https://www.tutorialspoint.com/jasper_reports/jasper_report_parameters.htm
+        $userDrupal = User::load(\Drupal::currentUser()->id());
+        $adhCode = $userDrupal->get('field_active_adherent_code')->value;
+        // $adhCode= '60013';
+        $url = "https://gportal.ocara.com/stats";
+        $expire = date('YmdGi', strtotime('1 hour'));
+        $resource = '/OCARA/PORTAIL/TBords/test_TB_suivi_adherent';
+        // $resource = '/OCARA/PORTAIL/TBords/Visites_médicales_par_motif_et_statut_TDB';
+        $token = "u=portal|r=OCARA_PORT|o=organization_1|exp=" . $expire;
+
+        // Same as in JAVA
+        $iv = 'fedcba9876543210';
+        $key = '0123456789abcdef';
+        // https://github.com/chaudhuri-ab/CrossPlatformCiphers
+        $token = urlencode(Drupal\gepsis\Utility\PHP_AES_Cipher::encryptToken($key, $iv, $token));
+
+        $attachments['#attached']['library'][] = 'gepsis/includeJasperForm';
+        $attachments['#attached']['drupalSettings']['gepsis'] = [
+            'url' => $url,
+            'resource' => $resource,
+            'adhCode' => $adhCode,
+            'token' => $token,
+        ];
+    } else if ($path == '/adherent') {
+        $attachments['#attached']['library'][] = 'gepsis/preprocessTabs';
+    }
+}
+
+function encodeURIComponentPage($str) {
+    $revert = [
+        '%21' => '!',
+        '%2A' => '*',
+        '%27' => "'",
+        '%28' => '(',
+        '%29' => ')',
+    ];
+    return strtr(rawurlencode($str), $revert);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter()
+ *
+ * Display views 3.x exposed filters' field labels and fields inline
+ */
+function gepsis_form_views_exposed_form_alter(&$form, $form_state, $form_id) {
+    // If you want to only affect specific views' exposed forms, select the view name here
+    if ($form['#id'] == 'views-exposed-form-v1-entr-travs-page-1') {
+        // Add a class to the attributes
+        array_unshift($form['#attributes']['class'], 'container-inline');
+    }
+}
+
+/**
+ * Implements hook_webform_options_WEBFORM_OPTIONS_ID_alter().
+ * https://www.drupal.org/docs/8/modules/webform/webform-cookbook/how-to-use-options-from-an-external-webservice
+ */
+function gepsis_webform_options_geps_cities_alter(array &$options, array &$element) {
+    // Load cached options.
+    if ($cache = \Drupal::cache()->get('geps_cities')) {
+        $options = $cache->data;
+        return;
+    }
+
+    // Get data as associative array from the external webservice.
+    // $external_countries_url = 'https://gist.githubusercontent.com/mshafrir/2646763/raw/8b0dbb93521f5d6889502305335104218454c2bf/states_hash.json';
+    // $options = json_decode(file_get_contents($external_countries_url), TRUE);
+
+    $cities = getAllCityes();
+    \Drupal::cache()->set('geps_cities', $cities);
+}
+

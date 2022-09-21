@@ -1,0 +1,24 @@
+diff --git a/core/modules/dblog/src/Plugin/views/field/DblogMessage.php b/core/modules/dblog/src/Plugin/views/field/DblogMessage.php
+index fd18779f..0e95455a 100644
+--- a/core/modules/dblog/src/Plugin/views/field/DblogMessage.php
++++ b/core/modules/dblog/src/Plugin/views/field/DblogMessage.php
+@@ -2,8 +2,8 @@
+
+ namespace Drupal\dblog\Plugin\views\field;
+
+-use Drupal\Component\Render\FormattableMarkup;
+ use Drupal\Core\Form\FormStateInterface;
++use Drupal\Core\StringTranslation\TranslatableMarkup;
+ use Drupal\views\Plugin\views\field\FieldPluginBase;
+ use Drupal\views\ResultRow;
+ use Drupal\views\ViewExecutable;
+@@ -60,7 +60,7 @@ public function render(ResultRow $values) {
+
+     if ($this->options['replace_variables']) {
+       $variables = unserialize($this->getvalue($values, 'variables'));
+-      return new FormattableMarkup($value, (array) $variables);
++      return new TranslatableMarkup($value, (array) $variables);
+     }
+     else {
+       return $this->sanitizeValue($value);
+

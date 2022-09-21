@@ -1,0 +1,18 @@
+<div class="bouton-conteneur">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-4">
+        <div class="bouton"><a href="https://www.youtube.com/watch?v=MkbkYGzGUIU" target="_blank" title="Cliquez ici pour accéder au tutoriel vidéo présentant les fonctionnalités de l’espace adhérent">Tutoriel vidéo espace adhérent </a>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="bouton-hidd"><a href="form/declaration-annuelle">Je procède à ma télédéclaration</a>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="bouton-hidd"><a href="v1-entr-travs">Je vérifie / modifie mon effectif</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

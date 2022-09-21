@@ -1,0 +1,61 @@
+diff --git a/core/modules/views/src/Plugin/views/display/DisplayPluginBase.php b/core/modules/views/src/Plugin/views/display/DisplayPluginBase.php
+index c8dc1f49..d0bc244b 100644
+--- a/core/modules/views/src/Plugin/views/display/DisplayPluginBase.php
++++ b/core/modules/views/src/Plugin/views/display/DisplayPluginBase.php
+@@ -53,7 +53,7 @@
+    *
+    * @var \Drupal\views\Plugin\views\display_extender\DisplayExtenderPluginBase[]
+    */
+-  protected $extenders = [];
++  public $extenders = [];
+
+   /**
+    * {@inheritdoc}
+diff --git a/core/modules/views/src/Plugin/views/style/StylePluginBase.php b/core/modules/views/src/Plugin/views/style/StylePluginBase.php
+index c23dccd7..f2bd8f9d 100644
+--- a/core/modules/views/src/Plugin/views/style/StylePluginBase.php
++++ b/core/modules/views/src/Plugin/views/style/StylePluginBase.php
+@@ -653,7 +653,7 @@ public function renderGrouping($records, $groupings = [], $group_rendered = NULL
+    * @param array $result
+    *   The result array from $view->result
+    */
+-  protected function renderFields(array $result) {
++  public function renderFields(array $result) {
+     if (!$this->usesFields()) {
+       return;
+     }
+@@ -792,7 +792,31 @@ public function getField($index, $field) {
+       return $this->rendered_fields[$index][$field];
+     }
+   }
++  /**
++   * Gets all rendered fields.
++   *
++   * @return array|null
++   *   The output of all rendered fields, or NULL if it was empty.
++   */
++  public function getRenderedFields() {
++  	return isset($this->rendered_fields) ? $this->rendered_fields : NULL;
++  }
+
++  /**
++   * Sets a rendered field.
++   *
++   * @param $field_value
++   *   The modified value of the rendered field.
++   *
++   * @param $row_index
++   *   The index count of the row.
++   *
++   *  @param $field_name
++   *    The id of the rendered field.
++   */
++  public function setRenderedField($field_value, $row_index, $field_name) {
++    $this->rendered_fields[$row_index][$field_name] = $field_value;
++  }
+   /**
+    * Get the raw field value.
+    *
+--
+2.15.1.windows.2
+

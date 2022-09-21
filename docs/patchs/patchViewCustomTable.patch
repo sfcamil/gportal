@@ -1,0 +1,16 @@
+diff --git a/web/modules/contrib/view_custom_table/view_custom_table.module b/web/modules/contrib/view_custom_table/view_custom_table.module
+--- a/web/modules/contrib/view_custom_table/view_custom_table.module	
++++ b/web/modules/contrib/view_custom_table/view_custom_table.module	(date 1656338732109)
+@@ -261,8 +261,10 @@
+   /* Check if table exists. */
+   try {
+   	// sfc
+-  	//     $query = 'DESCRIBE ' . $connection->tablePrefix($table_name) . $connection->escapeTable($table_name);
+-  	$query = "SELECT column_name, data_type FROM information_schema.columns WHERE table_name = '". $connection->tablePrefix($table_name) . $connection->escapeTable($table_name)."';";
++      if ($type == 'pgsql')
++          $query = "SELECT column_name, data_type FROM information_schema.columns WHERE table_name = '" . $connection->tablePrefix($table_name) . $connection->escapeTable($table_name) . "';";
++      else
++          $query = 'DESCRIBE ' . $connection->escapeTable($table_name);
+     if ($result = $connection->query($query)) {
+       $table_info = $result->fetchAll();
+     }

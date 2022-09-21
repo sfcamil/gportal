@@ -1,0 +1,19 @@
+
+cd X:\gportal\web\modules\custom\gepsis
+git init
+git add .
+git commit -m "first commit"
+git status
+git remote add origin https://github.com/sfcamil/gepsis.git
+git push -f origin master
+
+
+cd X:\gportal\web\libraries\odataphp\
+git remote add origin https://github.com/sfcamil/odataPhp.git
+
+cd X:\gportal\web\modules\contrib\odata\
+git remote add origin https://github.com/sfcamil/odata.git
+
+
+
+git rm --cached .\composer.lock

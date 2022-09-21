@@ -1,0 +1,54 @@
+attention il faut copier les classesdepuis ECLIPSE. jar marche pas
+
+
+
+Domoticz
+cd /var/www/gportal/web/libraries/odataphp/src/
+php PHPDataSvcUtil.php /uri=http://localhost:8082/gportalgateway/GepsFrance/GepsFrance.svc
+php PHPDataSvcUtil.php /uri=http://localhost:8082/gportalgateway/GepsFranceWrite/GepsFrance.svc
+
+
+Attention: Redefinition of parameter $O_ID in read class
+
+
+        public static function CreateV1_DUE(
+            $O_ID,
+            $ENTREPRISE,
+            $O_ID,
+            $ENTREPRISE)
+        {
+            $V1_DUE = new V1_DUE();
+            $V1_DUE->O_ID = $O_ID;
+            $V1_DUE->ENTREPRISE = $ENTREPRISE;
+            $V1_DUE->O_ID = $O_ID;
+            $V1_DUE->ENTREPRISE = $ENTREPRISE;
+            return $V1_DUE;
+        }
+
+
+        class V1_DUE extends BaseObject
+
+       /**
+        * @Type:EntityProperty
+        * NotNullable
+        * @EdmType:Edm.Int64
+        */
+        public $O_ID;
+
+       /**
+        * @Type:EntityProperty
+        * NotNullable
+        * @EdmType:Edm.Int64
+        */
+        public $ENTREPRISE;
+
+
+
+Attention:  in context/saveResult.php       ligne 1283
+
+             // sfc: add contentType: ; charset=UTF-8
+                $request = $this->_context->CreateRequest($resourceUri,
+                                                       $entityHttpMethod,
+                                                       false,
+                                                       "application/atom+xml; charset=UTF-8",
+                                                       Resource::DataServiceVersion_1);

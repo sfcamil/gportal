@@ -1,0 +1,234 @@
+/**********************/
+/*   MEETINGS PORTAIL */
+/**********************/
+
+.view-v1-all-meetings-portal tr:hover td, tr.even:hover td.active, tr.odd:hover td.active {
+  background: #fffeee;
+  text-shadow: -.25px -.25px 0 black, .25px .25px black;
+  cursor: pointer;
+}
+
+/**********************/
+/* MEETINGS AVAILABLE */
+/**********************/
+
+.view-v1-all-meetings-available tr:hover td, tr.even:hover td.active, tr.odd:hover td.active {
+  background: #fffeee;
+  text-shadow: -.25px -.25px 0 black, .25px .25px black;
+  cursor: pointer;
+}
+
+/**********************/
+/*   MEETINGS HISTO   */
+/**********************/
+
+.view-v1-entr-meetings tr:hover td, tr.even:hover td.active, tr.odd:hover td.active {
+  background: #fffeee;
+  text-shadow: -.25px -.25px 0 black, .25px .25px black;
+  cursor: pointer;
+}
+
+/**********************/
+/*   SUB_USERS        */
+/**********************/
+
+.view-subuser tr:hover td, tr.even:hover td.active, tr.odd:hover td.active {
+  background: #fffeee;
+  text-shadow: -.25px -.25px 0 black, .25px .25px black;
+  cursor: pointer;
+}
+
+/**********************/
+/*     TRAVS           */
+/**********************/
+
+.view-v1-entr-travs tr:hover td, tr.even:hover td.active, tr.odd:hover td.active {
+  background: #fffeee;
+  text-shadow: -.25px -.25px 0 black, .25px .25px black;
+  cursor: pointer;
+}
+
+.view-v1-entr-travs caption {
+  text-align: left;
+}
+/**********************/
+/*      POSTES        */
+/**********************/
+
+.view-v1-all-postes tr:hover td, tr.even:hover td.active, tr.odd:hover td.active {
+  background: #fffeee;
+  text-shadow: -.25px -.25px 0 black, .25px .25px black;
+  cursor: pointer;
+}
+/**********************/
+/*  ADHERENT CONTACTS */
+/**********************/
+
+.view-v1-entr-adherent-contact tr:hover td, tr.even:hover td.active, tr.odd:hover td.active {
+  background: #fffeee;
+  text-shadow: -.25px -.25px 0 black, .25px .25px black;
+  cursor: pointer;
+}
+
+.view-v1-entr-adherent-contact caption {
+  text-align: left;
+}
+
+.view-v1-entr-adherent-contact .views-field-ROLE-LABEL-1 {
+  width: 200px !important;
+}
+
+.view-v1-entr-adherent-contact .views-field-PERS-TITRE {
+  width: 150px !important;
+}
+
+.view-v1-entr-adherent-contact .views-field-PERS-NAME {
+  width: 200px !important;
+}
+
+.view-v1-entr-adherent-contact .views-field-PERS-FIRST-NAME {
+  width: 200px !important;
+}
+
+.view-v1-entr-adherent-contact .views-field-FONCTION {
+  width: 200px !important;
+}
+
+.view-v1-entr-adherent-contact .views-field-ADR-TYPE-LABEL {
+  width: 250px !important;
+}
+
+.view-v1-entr-adherent-contact .views-field-E-MAIL {
+  width: 250px !important;
+}
+
+.view-v1-entr-adherent-contact thead tr th {
+  background-color: lightgray;
+}
+
+.view-v1-entr-adherent-contact thead tr th:first-child {
+  z-index: -1;
+  border-radius: 10px 0 0 0;
+  -moz-border-radius: 10px 0 0 0;
+  border-radius: 10px 0 0 0;
+}
+
+.view-v1-entr-adherent-contact thead tr th:last-child {
+  z-index: -1;
+  border-radius: 0 10px 0 0;
+  -moz-border-radius: 0 10px 0 0;
+  border-radius: 0 10px 0 0;
+}
+
+/**********************/
+/*     ADRESSES       */
+/**********************/
+
+.view-v1-entr-adresses tr:hover td, tr.even:hover td.active, tr.odd:hover td.active {
+  background: #fffeee;
+  text-shadow: -.25px -.25px 0 black, .25px .25px black;
+  cursor: pointer;
+}
+
+.view-v1-entr-adresses caption {
+  text-align: left;
+}
+
+.view-v1-entr-adresses .views-field-ADR-CITY-LABEL {
+  width: 400px !important;
+}
+
+.view-v1-entr-adresses .views-field-ADR-CITY-CODE {
+  width: 250px !important;
+}
+
+.view-v1-entr-adresses .views-field-VOIE-NO {
+  width: 100px !important;
+}
+
+.view-v1-entr-adresses .views-field-VOIE-TYP {
+  width: 150px !important;
+}
+
+.view-v1-entr-adresses thead tr th {
+  background-color: lightgray;
+}
+
+.view-v1-entr-adresses thead tr th:first-child {
+  z-index: -1;
+  border-radius: 10px 0 0 0;
+  -moz-border-radius: 10px 0 0 0;
+  border-radius: 10px 0 0 0;
+}
+
+.view-v1-entr-adresses thead tr th:last-child {
+  z-index: -1;
+  border-radius: 0 10px 0 0;
+  -moz-border-radius: 0 10px 0 0;
+  border-radius: 0 10px 0 0;
+}
+
+/**********************/
+/*       boutons      */
+/**********************/
+
+.views-button-semitransparent {
+  display: block;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 8px;
+  width: 80%;
+  /* max-width: 200px; */
+  background: #607d8b; /* fallback color for old browsers */
+  background: rgba(96, 125, 139, 0.5);
+  border-radius: 8px;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: all 0.3s ease-out;
+}
+
+.views-button-semitransparent:hover, .views-button-semitransparent:focus,
+.semi-transparent-button:active {
+  background: rgba(84, 107, 118, 0.5);
+  color: #000;
+  transition: all 0.1s ease-in;
+  border-radius: 8px;
+}
+
+.views-button {
+  background-color: #1c87c9 !important;
+  color: white !important;
+  display: inline-block;
+  cursor: pointer;
+  border: 1px solid #ccc;
+}
+
+.views-button-green {
+  background-color: #86cb81 !important;
+  border: none;
+  color: white !important;
+  display: inline-block;
+  margin: 16px 2px;
+  cursor: pointer;
+}
+
+.views-button-blue {
+  background-color: #027EFF !important;
+  border: none;
+  color: white !important;
+  display: inline-block;
+  margin: 16px 2px;
+  cursor: pointer;
+}
+
+.views-button-red {
+  background-color: #e11f22 !important;
+  border: none;
+  color: white !important;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+}

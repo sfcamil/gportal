@@ -1,0 +1,64 @@
+diff --git a/page_manager_ui/page_manager_ui.module b/page_manager_ui/page_manager_ui.module
+index 6ada2f4..f5f2e11 100644
+--- a/page_manager_ui/page_manager_ui.module
++++ b/page_manager_ui/page_manager_ui.module
+@@ -73,7 +73,7 @@ function page_manager_ui_theme() {
+       'variables' => [
+         'wizard' => NULL,
+         'cached_values' => [],
+-        'tree' => [],
++        'tree_structure' => [],
+         'divider' => ' Â» ',
+         'step' => NULL,
+       ],
+@@ -88,7 +88,7 @@ function template_preprocess_page_manager_wizard_tree(&$variables) {
+   /** @var $wizard \Drupal\ctools\Wizard\FormWizardInterface|\Drupal\ctools\Wizard\EntityFormWizardInterface */
+   $wizard = $variables['wizard'];
+   $cached_values = $variables['cached_values'];
+-  $tree = $variables['tree'];
++  $tree = $variables['tree_structure'];
+   $variables['step'] = $wizard->getStep($cached_values);
+
+   foreach ($wizard->getOperations($cached_values) as $step => $operation) {
+diff --git a/page_manager_ui/src/Wizard/PageWizardBase.php b/page_manager_ui/src/Wizard/PageWizardBase.php
+index d056a0a..dda9bb4 100644
+--- a/page_manager_ui/src/Wizard/PageWizardBase.php
++++ b/page_manager_ui/src/Wizard/PageWizardBase.php
+@@ -58,7 +58,7 @@ class PageWizardBase extends EntityFormWizardBase {
+     /** @var $page \Drupal\page_manager\Entity\Page */
+     $page = $cached_values['page'];
+
+-    if ($page) {
++    if ($page && !empty($page->getPath())) {
+       $matches = [];
+       preg_match_all('|\{\w+\}|', $page->getPath(), $matches);
+       if (array_filter($matches)) {
+diff --git a/src/Entity/Page.php b/src/Entity/Page.php
+index 003e053..aabb045 100644
+--- a/src/Entity/Page.php
++++ b/src/Entity/Page.php
+@@ -144,7 +144,13 @@ class Page extends ConfigEntityBase implements PageInterface {
+    * {@inheritdoc}
+    */
+   public function usesAdminTheme() {
+-    return isset($this->use_admin_theme) ? $this->use_admin_theme : strpos($this->getPath(), '/admin/') === 0;
++    if (isset($this->use_admin_theme)) {
++      return $this->use_admin_theme;
++    }
++
++    $path = $this->getPath();
++
++    return !empty($path) && strpos($path, '/admin/') === 0;
+   }
+
+   /**
+@@ -296,7 +302,8 @@ class Page extends ConfigEntityBase implements PageInterface {
+    * {@inheritdoc}
+    */
+   public function getParameterNames() {
+-    if (preg_match_all('|\{(\w+)\}|', $this->getPath(), $matches)) {
++    $path = $this->getPath();
++    if (!empty($path) && preg_match_all('|\{(\w+)\}|', $path, $matches)) {
+       return $matches[1];
+     }
+     return [];
