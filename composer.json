@@ -1,0 +1,83 @@
+{
+    "name": "sfcamil/gepsis",
+    "description": "Gepsis adherent portal",
+    "type": "drupal-custom-module",
+    "minimum-stability": "@dev",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Florin Stoica",
+            "email": "fs@ocara.com"
+        }
+    ],
+    "repositories": {
+        "drupal-ckeditor-plugins": {
+            "type": "composer",
+            "url": "https://panopoly.gitlab.io/drupal-ckeditor-plugins"
+        },
+        "0": {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        },
+        "1": {
+            "type": "vcs",
+            "url": "https://github.com/sfcamil/odataphp",
+            "options": {
+                "http": {
+                    "header": [
+                        "API-TOKEN: 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"
+                    ]
+                }
+            }
+        },
+        "2": {
+            "type": "vcs",
+            "url": "https://github.com/sfcamil/odata",
+            "options": {
+                "http": {
+                    "header": [
+                        "API-TOKEN: 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"
+                    ]
+                }
+            }
+        }
+    },
+        "installer-paths": {
+            "web/core": [
+                "type:drupal-core"
+            ],
+            "web/libraries/{$name}": [
+                "type:drupal-library"
+            ],
+            "web/modules/contrib/{$name}": [
+                "type:drupal-module"
+            ],
+            "web/profiles/contrib/{$name}": [
+                "type:drupal-profile"
+            ],
+            "web/themes/contrib/{$name}": [
+                "type:drupal-theme"
+            ],
+            "drush/Commands/contrib/{$name}": [
+                "type:drupal-drush"
+            ],
+            "web/modules/custom/{$name}": [
+                "type:drupal-custom-module"
+            ],
+            "web/profiles/custom/{$name}": [
+                "type:drupal-custom-profile"
+            ],
+            "web/themes/custom/{$name}": [
+                "type:drupal-custom-theme"
+            ]
+        },
+    "require": {
+        "sfcamil/odataphp": "dev-prod",
+		"sfcamil/odata": "dev-prod"
+    },
+    "config": {
+        "github-oauth": {
+            "github.com": "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"
+        }
+    }
+}
