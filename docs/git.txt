@@ -17,3 +17,4 @@ git remote add origin https://github.com/sfcamil/odata.git
 
 
 git rm --cached .\composer.lock
+git rm --cached .\composer.json

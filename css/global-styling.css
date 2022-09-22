@@ -1,3 +1,12 @@
+/* We apply the main image to the whole page wrapper */
+#main-container {
+    background-color: transparent;
+    background-size: cover;
+    background-image: url("../images/v952-bb-024.jpg") !important;
+    background-position: top center;
+    background-repeat: repeat;
+}
+
 /*  DEMANDE RDV SELECT SAL TO LARGE */
 #edit_selectionner_un_salarie_chosen {
     width: 100% !important;

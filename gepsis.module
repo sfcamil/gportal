@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\gepsis\Controller\CronCreateNewUsersPortal;
 
 function gepsis_cron() {
-        CronCreateNewUsersPortal::process();
+    CronCreateNewUsersPortal::process();
 }
 
 /**
@@ -128,6 +128,14 @@ function gepsis_form_alter(&$form, &$form_state, $form_id) {
             // $form['name']['#attributes']['placeholder'] = t('User name');
             // $form['pass']['#attributes']['placeholder'] = t('Password');
             $form['#submit'][] = '_gepsis_user_login_form_submit';
+            $form['name']['#description'] = t('');
+            $form['pass']['#description'] = t('');
+            break;
+        case 'user_pass':
+            // Add placeholders.
+            // $form['name']['#attributes']['placeholder'] = t('User name');
+            // $form['pass']['#attributes']['placeholder'] = t('Password');
+            $form['mail']['#markup']= \Drupal\Core\Render\Markup::create('');
             break;
     }
 
