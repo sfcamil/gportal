@@ -1,0 +1,49 @@
+cd opt/jasperreports-server-7.5.0/buildomatic
+
+exemple Export OCARA/TRC/REF et IMAGES
+--------------------------------------
+./js-export.sh --uris /organizations/organization_1/OCARA/TRC/REF, /organizations/organization_1/images --output-zip tdb_trc_ref.zip --secret-key="0x6f 0xf1 0xf1 0x46 0x46 0x1f 0x62 0xa1 0x03 0x56 0x13 0x46 0x07 0xa1 0xa1 0x10"
+
+example yosys to ABC
+./js-export.sh --uris /organizations/organization_1/OCARA/PORTAIL --output-zip yosysToABC.zip --secret-key="0x6f 0xf1 0xf1 0x46 0x46 0x1f 0x62 0xa1 0x03 0x56 0x13 0x46 0x07 0xa1 0xa1 0x10"
+
+Full export OCARA et IMAGES
+---------------------------
+./js-export.sh --uris /organizations/organization_1/OCARA, /organizations/organization_1/images --output-zip ocara_folder.zip --secret-key="0x6f 0xf1 0xf1 0x46 0x46 0x1f 0x62 0xa1 0x03 0x56 0x13 0x46 0x07 0xa1 0xa1 0x10"
+
+Clé
+0x6f 0xf1 0xf1 0x46 0x46 0x1f 0x62 0xa1 0x03 0x56 0x13 0x46 0x07 0xa1 0xa1 0x10
+
+Import ˆ faire en SUPERUSER !!!!!
+
+
+garde que importation
+
+
+
+
+DIVERS
+------
+./js-export.sh --uris /organizations/organization_1/OCARA, /organizations/organization_1/images --output-zip ocara_folder.zip --secret-key="0x6f 0xf1 0xf1 0x46 0x46 0x1f 0x62 0xa1 0x03 0x56 0x13 0x46 0x07 0xa1 0xa1 0x10"
+./js-export.sh --uris /organizations/organization_1/BI_GEPS --output-zip backup_bi_geps_folder.zip --secret-key="0x6f 0xf1 0xf1 0x46 0x46 0x1f 0x62 0xa1 0x03 0x56 0x13 0x46 0x07 0xa1 0xa1 0x10"
+
+
+
+
+Pour avoir un buildomatic 7.5.1 si version upgraded depuis 7.2.0
+----------------------------------------------------------------
+Exemple MT71
+CrŽer un folder /opt/jasperreports-server-7.2.0/buildomatic-7.5.1 ˆ c™tŽ du /opt/jasperreports-server-7.2.0/buildomatic QUI DOIT RESTER
+Y copier le contenu du folder dans le kit d'upgrade /root/jasperSoft/jasperreports-server-pro-7.5.1-bin/buildomatic
+Ensuite on peut supprimer le kit d'upgrade /root/jasperSoft/jasperreports-server-pro-7.5.1-bin
+
+Tests import-export:
+cd /opt/jasperreports-server-7.2.0/buildomatic-7.5.1
+
+Pour l'export
+ ./js-export.sh --uris /organizations/organization_1/test_import_export --output-zip /opt/jasperreports-server-7.2.0/test_import_export.zip --secret-key="0x6f 0xf1 0xf1 0x46 0x46 0x1f 0x62 0xa1 0x03 0x56 0x13 0x46 0x07 0xa1 0xa1 0x10" > /opt/jasperreports-server-7.2.0/test_import_export.log
+
+Pour l'import
+./js-import.sh --input-zip /opt/jasperreports-server-7.2.0/test_import_export.zip --secret-key="0x6f 0xf1 0xf1 0x46 0x46 0x1f 0x62 0xa1 0x03 0x56 0x13 0x46 0x07 0xa1 0xa1 0x10"
+ou import via la console en superuser
+
