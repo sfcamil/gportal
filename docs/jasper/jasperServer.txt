@@ -1,4 +1,4 @@
-      
+SAMPLES: /opt/jasperreports-server-7.2.0/samples/externalAuth-sample-config
       
          https://community.jaspersoft.com/wiki/php-client-sample-code#Running_a_Report
          JS visualize
@@ -6,7 +6,6 @@
 
          loggin error
          https://community.jaspersoft.com/wiki/cannot-log-internal-users-after-configuring-cas-authentication-51-52-55
-
          https://community.jaspersoft.com/wiki/how-disable-login-page-external-network-or-domain
          https://community.jaspersoft.com/wiki/enable-rest-api-logging-jasperreports-server
          https://community.jaspersoft.com/wiki/visualizejs-how-identify-ad-hoc-parameter-filter-name-and-pass-values
@@ -16,8 +15,45 @@
          https://community.jaspersoft.com/wiki/php-client-wordpress-example
          https://community.jaspersoft.com/wiki/how-disable-login-page-external-network-or-domain
          https://sangatpedas.com/20121128/filter-access-to-tomcat-based-on-ip-behind-proxy-server/
-        
         Examples: https://github.com/TIBCOSoftware/js-visualize#jsfiddle-samples
+
+MYCHIPER
+PROJECT in : E:\xampp\htdocs\myCipher
+        copy myChipoer.jar to /opt/jasperreports-server/apache-tomcat/webapps/stats/WEB-INF/lib
+        copy applicationContext-externalAuth-preAuth-mt.xml to /opt/jasperreports-server/apache-tomcat/webapps/stats/WEB-INF
+
+        add to /opt/jasperreports-server-7.2.0/apache-tomcat/webapps/stats/WEB-INF/classes/jasperreports.properties
+        com.jaspersoft.cipher.property.key=0123456789abcdef
+        com.jaspersoft.cipher.property.iv=fedcba9876543210
+
+        Create user with POSTMAN --- !!!! IL NE FAUT PAS LE FAIRE. le script va le faire lui meme
+        Apres creation (premier access) go et donne des droits au OCARA_PORT_EXT
+        PORTAIL: lecture seule
+        SRC: executer uniquement
+        TMP: lecture seule
+        TRC: lecture seule
+        DOMAINE: lecture seule
+        DATA Sources: executer uniquement
+
+        PUT: http://10.3.40.31/stats/rest_v2/organizations/organization_1/users/portal
+        AUTHORIZATION: basic , superuser / mt .....
+        BODY:
+        {
+          "fullName":"Portal",
+          "emailAddress":"fs@ocara.com",
+          "enabled":true,
+          "password":"a",
+          "roles":[
+            {"name":"ROLE_USER"}]
+        }
+
+        IMPORTANT: change in gportal gepsis.libraries.yml to use visualize.js from the client
+        Ex: includeJasperForm:
+              version: 1.0
+              js:
+                https://gportal.ocara.com/stats/client/visualize.js: { type: external }
+
+
 TOMCAT        
 		1. Change the directory name of the <tomcat>/webapps/jasperserver to <tomcat>/stats/mynewname.
 		2. Open <tomcat>/webapps/mynewname/WEB-INF/web.xml and change this element:
@@ -33,7 +69,6 @@ APACHE
         # ProxyPassReverse /stats http://127.0.0.1:8085/stats
         
 NGINX
-
 	location /stats {
        proxy_pass http://10.220.18.1:8085/stats;
 	   # proxy_set_header X-Forwarded-Proto "https";
@@ -45,7 +80,8 @@ NGINX
     }
         
         
-FILTER (/opt/jasperreports-server-7.2.0/apache-tomcat/webapps/stats/WEB-INF/web.xml)
+FILTER
+(/opt/jasperreports-server-7.2.0/apache-tomcat/webapps/stats/WEB-INF/web.xml)
      <filter>
 		<filter-name>Remote Address Filter</filter-name>
 		<filter-class>org.apache.catalina.filters.RemoteAddrFilter</filter-class>
