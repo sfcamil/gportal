@@ -152,7 +152,7 @@
                                 resource: uri,
                                 container: "#edit-processed-rapport-container",
                                 scale: "container",
-                                params: {monCode: [adhCode]},
+                                params: {[monCode] : [adhCode]},
                                 autoresize: true,
                                 // runImmediately: false,
                                 defaultJiveUi: {enabled: true},
