@@ -104,16 +104,22 @@ class InternalFunctions
     }
 
     public static function setupTraceInfos(&$customer) {
-        $customer->remoteAddr = empty($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR']:'';
+        if(is_object($customer))
+            $val = $customer;
+        else
+            $val = $customer[0];
+
+        $val->remoteAddr = empty($_SERVER['REMOTE_ADDR'])?'':$_SERVER['REMOTE_ADDR'];
         $request = \Drupal::request();
-        $customer->remoteSession = $request->getSession()->getId();
+        $val->remoteSession = $request->getSession()->getId();
         $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
         $name = $user->get('name')->value;
 
         // @formatter:off
         $remoteUser = str_replace(array('+', '\\', '?', '%', '#', '&', '/', '$', '\''), '', $name);
         // @formatter:on
-        $customer->remoteUser = htmlspecialchars($remoteUser);
+        $val->remoteUser = htmlspecialchars($remoteUser);
+        $customer = $val;
     }
 
     public static function getEmailAssistante() {
