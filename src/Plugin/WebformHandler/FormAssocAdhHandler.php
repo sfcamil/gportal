@@ -94,10 +94,10 @@ class FormAssocAdhHandler extends WebformHandlerBase
 
         // create paragraph record (multi) and save to user
         $user = \Drupal\user\Entity\User::load($userInput['utilisateur']);
-        $paragraph = createParagraphAdherent($result, $user);
+        $paragraph = InternalFunctions::createParagraphAdherent($result, $user);
 
         // add to active adherent of user
-        setAdherentActifByParagraph($paragraph, $user);
+        InternalFunctions::setAdherentActifByParagraph($paragraph, $user);
 
         $adherentCode = $paragraph->get('field_code_adherent')->first()->getValue();
         $adherentName = $paragraph->get('field_nom_adherent')->first()->getValue();
