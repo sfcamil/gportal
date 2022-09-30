@@ -236,17 +236,31 @@ function gepsis_preprocess_block(&$variables) {
     }
 }
 
+function gepsis_library_info_build() {
+    $libraries = [];
+    $host = \Drupal::request()->getSchemeAndHttpHost();
+    $js_path = $host . '/stats/client/visualize.js';
+    $libraries['includeVisualize'] = [
+        'version' => '1.x',
+        'js' => [
+            $js_path => ['type' => 'external']
+        ],
+    ];
+    return $libraries;
+}
+
 /**
  * Implements hook_page_attachments().
  */
 function gepsis_page_attachments(array &$attachments) {
     $path = \Drupal::service('path.current')->getPath();
+    $host = \Drupal::request()->getSchemeAndHttpHost();
     if ($path == '/node/3' || $path == '/node/8') {
         // TODO : pass parramaeters: https://www.tutorialspoint.com/jasper_reports/jasper_report_parameters.htm
         $userDrupal = User::load(\Drupal::currentUser()->id());
         $adhCode = $userDrupal->get('field_active_adherent_code')->value;
         // $adhCode= '60013';
-        $url = "https://gportal.ocara.com/stats";
+        $url = $host . "/stats";
         $expire = date('YmdGi', strtotime('1 hour'));
         $resource = '/OCARA/PORTAIL/TBords/test_TB_suivi_adherent';
         // $resource = '/OCARA/PORTAIL/TBords/Visites_médicales_par_motif_et_statut_TDB';
@@ -258,6 +272,7 @@ function gepsis_page_attachments(array &$attachments) {
         // https://github.com/chaudhuri-ab/CrossPlatformCiphers
         $token = urlencode(Drupal\gepsis\Utility\PHP_AES_Cipher::encryptToken($key, $iv, $token));
 
+        $attachments['#attached']['library'][] = 'gepsis/includeVisualize';
         $attachments['#attached']['library'][] = 'gepsis/includeJasperForm';
         $attachments['#attached']['drupalSettings']['gepsis'] = [
             'url' => $url,

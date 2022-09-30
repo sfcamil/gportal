@@ -45,7 +45,7 @@ calculPeriodicite:
 includeJasperForm:
   version: 1.0
   js:
-    https://gportal.ocara.com/stats/client/visualize.js: { type: external }
+    # https://gportal.ocara.com/stats/client/visualize.js: { type: external }
     # https://gportal9/stats/client/visualize.js?_opt=true: { type: external, minified: true }
     # js/visualize.js: {}
     js/includeJasperForm.js: {}
