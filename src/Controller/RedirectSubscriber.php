@@ -28,6 +28,7 @@ class RedirectSubscriber implements EventSubscriberInterface
                 $route_name != 'user.reset.form' &&
                 $route_name != 'user.reset.login' &&
                 $route_name != 'entity.node.canonical' &&
+                $route_name != 'contact.site_page' &&
                 $route_name != 'user.pass') {
                 // add logic to check other routes you want available to anonymous users,
                 // otherwise, redirect to login page.
