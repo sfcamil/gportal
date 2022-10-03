@@ -1,0 +1,49 @@
+<VirtualHost *:80>
+	ServerName gportal.camil.ro
+	ServerAdmin fs@ocara.com
+	Redirect  /  https://gportal.camil.ro
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerAdmin fs@ocara.com
+    DocumentRoot /var/www/gportal/web/
+    ServerName gportal.camil.ro
+
+	ErrorLog /var/log/apache2/gportal.camil.ro-error.log
+    CustomLog /var/log/apache2/gportal.camil.ro-common.log common
+
+	# Include /etc/letsencrypt/options-ssl-apache.conf
+
+	SSLEngine On
+	SSLProxyEngine on
+	SSLProtocol All -SSLv3
+
+	SSLCertificateFile /etc/letsencrypt/live/gportal.camil.ro/fullchain.pem
+	SSLCertificateKeyFile /etc/letsencrypt/live/gportal.camil.ro/privkey.pem
+
+    <Directory /var/www/gportal/web/>
+        Options FollowSymlinks
+		AllowOverride All
+		Require all granted
+    </Directory>
+
+	ProxyPass /stats/login.html !
+
+	ProxyRequests Off
+	ProxyPreserveHost On
+	ProxyPass /stats https://gportal.ocara.com/stats
+	ProxyPassReverse /stats https://gportal.ocara.com/stats
+
+
+	ProxyPass /ds http://192.168.69.20:8082/ds
+	# ProxyPassReverse /ds http://192.168.69.20:8082/ds
+
+	RequestHeader set X-Forwarded-Proto "https"
+
+	# X-Forwarded-Port only needs to be set of the proxy server uses non standard ports 444 non 443
+	# RequestHeader set X-Forwarded-Port "444"
+
+
+
+</VirtualHost>
+
