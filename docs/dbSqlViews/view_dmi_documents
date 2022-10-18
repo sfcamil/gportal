@@ -2,6 +2,14 @@ grant select on table geps.versioned_trans to webmed;
 grant select on table geps.transaction to webmed;
 grant select on table geps.versioned_trans_context to webmed;
 grant select on table geps.vt_document to webmed;
+GRANT SELECT ON TABLE epstrb.vt_document_labels TO webmed;
+GRANT SELECT ON TABLE epstrb.ehr_document_type TO webmed;
+GRANT SELECT ON TABLE epstrb.versioned_trans TO webmed;
+GRANT SELECT ON TABLE epstrb."transaction" TO webmed;
+GRANT SELECT ON TABLE epstrb.ehr_base TO webmed;
+GRANT SELECT ON TABLE epstrb.dm_entreprise TO webmed;
+GRANT SELECT ON TABLE epstrb.vt_document TO webmed;
+
 
 permision usage sur geps for webmed
 
