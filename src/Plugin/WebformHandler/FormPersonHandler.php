@@ -5,6 +5,7 @@ namespace Drupal\gepsis\Plugin\WebformHandler;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\gepsis\Controller\GepsisOdataReadClass;
 use Drupal\gepsis\Controller\GepsisOdataWriteClass;
+use Drupal\webform\Annotation\WebformHandler;
 use Drupal\webform\Plugin\WebformHandlerBase;
 use Drupal\webform\WebformSubmissionInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -208,7 +209,6 @@ class FormPersonHandler extends WebformHandlerBase {
      * {@inheritdoc}
      */
     public function submitForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission) {
-        // $userInput = $form_state->getUserInput();
         $form_state->setRedirect('<front>');
         if ($form_state->getTriggeringElement()['#id'] == 'edit-actions-retour-submit') {
             return new RedirectResponse('v1-entr-travs');
