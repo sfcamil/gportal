@@ -4,11 +4,11 @@ git clone https://github.com/michelp/pgjwt
 cd pgjwt
 sudo make install
 
-
-
 psql -U postgres -d ocara
 attention dans la bonne DB (ici ocara)
 
+cd /usr/share/postgresql/9.6/extension/
+cp pgjwt--0.1.1.sql pgjwt--0.2.0.sql
 
 create EXTENSION pgcrypto SCHEMA public;
 create EXTENSION pgjwt SCHEMA public;
