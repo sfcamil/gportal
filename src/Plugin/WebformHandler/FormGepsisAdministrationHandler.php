@@ -8,6 +8,7 @@ use Drupal\gepsis\Controller\GepsisOdataReadClass;
 use Drupal\gepsis\Utility\InternalFunctions;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\user\Entity\User;
+use Drupal\webform\Annotation\WebformHandler;
 use Drupal\webform\Plugin\WebformHandlerBase;
 use Drupal\webform\WebformSubmissionInterface;
 
@@ -118,7 +119,8 @@ class FormGepsisAdministrationHandler extends WebformHandlerBase
         $formElements = InternalFunctions::getFlattenedForm($form['elements']);
         $userInput = $form_state->getUserInput();
         $oldDataLink = $formElements['odata_config_from_db']['#text'];
-        $oldDataLink = preg_match_all("/(http|https):\/\/([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})\:?([0-9]{1,5})?/", $oldDataLink, $match);
+        // $oldDataLink = preg_match_all("/(http|https):\/\/([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})\:?([0-9]{1,5})?/", $oldDataLink, $match);
+        $oldDataLink = preg_match_all("/(http|https):\/\/(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)+([A-Za-z]{2,6}|[A-Za-z][A-Za-z0-9\-]*[A-Za-z0-9])|(http|https):\/\/([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})\:?([0-9]{1,5})?/", $oldDataLink, $match);
         $oldDataLink = $match[0][0];
         $newOdataLink = $userInput['nouvelle_valeur_pour_odata_link']['other'] ? $userInput['nouvelle_valeur_pour_odata_link']['other'] : $userInput['nouvelle_valeur_pour_odata_link']['select'];
 
