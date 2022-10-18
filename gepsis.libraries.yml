@@ -60,3 +60,17 @@ preprocessTabs:
     js/preprocessTabs.js: {}
   dependencies:
     - core/jquery
+
+calculateDeclaOstra:
+  version: 1.0
+  css:
+    theme:
+      css/webformDeclaOstra.css: { }
+  js:
+    js/calculateDeclaOstra.js: { }
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal
+    - core/drupalSettings
+    - user/drupal.user.admin

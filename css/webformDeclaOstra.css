@@ -1,0 +1,42 @@
+
+.declaOstraClassSubmit {
+    background: #999999 !important;
+    /* background: linear-gradient(#8C909B, #AEB2B5); */
+    display: inline-block !important;
+    padding: 15px 32px !important;
+    text-align: center !important;
+
+    font-size: 20px !important;
+    font: normal bold 20px/1 "Arial", sans-serif !important;
+    border-radius: 20px !important;
+    color: white !important;
+    margin: 2px !important;
+}
+
+.declaOstraClassSubmit:hover {
+    background: #CCCCCC !important;
+    color: white !important;
+    border-radius: 20px !important;
+}
+
+
+/** puts labels and input fields on the same line and aligns them nicely */
+.webform-element--title-inline {
+    display: inline !important;
+}
+
+.webform-element--title-inline label {
+    width: 50%;
+    float: left;
+    text-align: right;
+    margin: 5px 0 0;
+    font-weight: bold;
+    font-weight: bold;
+}
+
+/** puts each input option on the same line as its label (see attached image). */
+.webform-element--title-inline input {
+    width: 20%;
+    padding: 3px;
+    margin: 0 0 10px;
+}
