@@ -236,7 +236,7 @@ class FormPersonHandler extends WebformHandlerBase {
         try {
             $customer = $query->Execute()->Result[0];
         } catch (\Throwable $e) {
-            return;
+            return new RedirectResponse('v1-entr-travs');
         }
 
         // person names
@@ -268,6 +268,7 @@ class FormPersonHandler extends WebformHandlerBase {
 
         //
         InternalFunctions::setupTraceInfos($customer);
+
         $svc->UpdateObject($customer);
         $svc->SaveChanges();
 
