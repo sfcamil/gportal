@@ -17,6 +17,8 @@ SAMPLES: /opt/jasperreports-server-7.2.0/samples/externalAuth-sample-config
          https://sangatpedas.com/20121128/filter-access-to-tomcat-based-on-ip-behind-proxy-server/
         Examples: https://github.com/TIBCOSoftware/js-visualize#jsfiddle-samples
 
+VOIR USERS CONNECTED:         search:  DIAG => diagnostic report (un de site necesite supersuser pour executer ce rapport)
+
 MYCHIPER
 PROJECT in : E:\xampp\htdocs\myCipher
         copy myChipoer.jar to /opt/jasperreports-server/apache-tomcat/webapps/stats/WEB-INF/lib
@@ -26,7 +28,6 @@ PROJECT in : E:\xampp\htdocs\myCipher
         com.jaspersoft.cipher.property.key=0123456789abcdef
         com.jaspersoft.cipher.property.iv=fedcba9876543210
 
-        Create user with POSTMAN --- !!!! IL NE FAUT PAS LE FAIRE. le script va le faire lui meme
         Apres creation (premier access) go et donne des droits au OCARA_PORT_EXT
         PORTAIL: lecture seule
         SRC: executer uniquement
@@ -35,6 +36,7 @@ PROJECT in : E:\xampp\htdocs\myCipher
         DOMAINE: lecture seule
         DATA Sources: executer uniquement
 
+        Create user with POSTMAN --- !!!! IL NE FAUT PAS LE FAIRE. le script va le faire lui meme
         PUT: http://10.3.40.31/stats/rest_v2/organizations/organization_1/users/portal
         AUTHORIZATION: basic , superuser / mt .....
         BODY:
@@ -54,6 +56,8 @@ PROJECT in : E:\xampp\htdocs\myCipher
                 https://gportal.ocara.com/stats/client/visualize.js: { type: external }
 
 
+
+
 TOMCAT        
 		1. Change the directory name of the <tomcat>/webapps/jasperserver to <tomcat>/stats/mynewname.
 		2. Open <tomcat>/webapps/mynewname/WEB-INF/web.xml and change this element:
@@ -67,7 +71,13 @@ APACHE
 		ProxyPreserveHost On
 		ProxyPass /stats http://127.0.0.1:8085/stats
         # ProxyPassReverse /stats http://127.0.0.1:8085/stats
-        
+
+                attention si htt vers https proxy
+                SSLProxyEngine on
+                SSLProtocol all -SSLv2 -SSLv3
+                	SSLHonorCipherOrder on
+                	SSLCipherSuite ECDH+AESGCM256:DH+AESGCM256:ECDH+AES256:SH+AES256:RSA+AESGCM256:RSA+AES256:!aNULL:!MD5:!kEDH:!RC4
+
 NGINX
 	location /stats {
        proxy_pass http://10.220.18.1:8085/stats;
