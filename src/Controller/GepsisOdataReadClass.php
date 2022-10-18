@@ -25,7 +25,7 @@ class GepsisOdataReadClass
             $query = $filter ? $svc->$class()->filter($filter) : $svc->$class();
             $result = $count ? $query->Top($count)->Execute()->Result : $query->Execute()->Result;
         } catch (\Throwable $e) { // Use Throwable instead of Exception here
-            \Drupal::logger('gepsis')->error($e->getMessage());
+            \Drupal::logger('gepsis')->error('Error getOdataClassValues read: ' . $e->getMessage());
             // \Drupal::messenger()->addError($e->getMessage());
             // $form_state->setRedirect('<front>');
             return;
