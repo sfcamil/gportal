@@ -1,3 +1,8 @@
+GRANT SELECT ON TABLE epstrb.alocated_resource TO webmed;
+GRANT SELECT ON TABLE epstrb.resource_table TO webmed;
+GRANT SELECT ON TABLE epstrb.cabinet_medical TO webmed;
+GRANT SELECT ON TABLE epstrb.lieu_examen TO webmed;
+
 create view v1$all_meetings_portal as
 select
     t.entreprise as entreprise_id,
