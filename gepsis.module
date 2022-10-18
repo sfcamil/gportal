@@ -38,6 +38,21 @@ function gepsis_help($route_name, RouteMatchInterface $route_match) {
     return;
 }
 
+function gepsis_link_alter(&$variables) {
+    return;
+    $host = \Drupal::request()->getHost();
+
+    // Return early where possible.
+    if ($variables['url']->isExternal())
+        return;
+
+
+    if ($host == 'gportal.camil.ro' && stripos($variables['text'], 'declaration') !== false) {
+        $route_name = \Drupal::routeMatch()->getRouteName();
+        // $variables['url'] = Url::fromUri('/form/declaration-annuelle-ostra');
+    }
+
+}
 
 function gepsis_user_login(AccountInterface $account) {
     // return;
@@ -135,7 +150,7 @@ function gepsis_form_alter(&$form, &$form_state, $form_id) {
             // Add placeholders.
             // $form['name']['#attributes']['placeholder'] = t('User name');
             // $form['pass']['#attributes']['placeholder'] = t('Password');
-            $form['mail']['#markup']= \Drupal\Core\Render\Markup::create('');
+            $form['mail']['#markup'] = \Drupal\Core\Render\Markup::create('');
             break;
     }
 
@@ -239,7 +254,7 @@ function gepsis_preprocess_block(&$variables) {
 function gepsis_library_info_build() {
     $libraries = [];
     $host = \Drupal::request()->getSchemeAndHttpHost();
-    $js_path = $host . '/stats/client/visualize.js';
+    $js_path = strpos($host, 'camil.ro') ? 'https://gportal.ocara.com/stats/client/visualize.js' : $host . '/stats/client/visualize.js';
     $libraries['includeVisualize'] = [
         'version' => '1.x',
         'js' => [
