@@ -253,12 +253,23 @@ function gepsis_preprocess_block(&$variables) {
 
 function gepsis_library_info_build() {
     $libraries = [];
-    $host = \Drupal::request()->getSchemeAndHttpHost();
-    $js_path = strpos($host, 'camil.ro') ? 'https://gportal.ocara.com/stats/client/visualize.js' : $host . '/stats/client/visualize.js';
-    $libraries['includeVisualize'] = [
+    $url = \Drupal::request()->getSchemeAndHttpHost();
+    $host = str_contains($url, 'camil.ro') ? 'https://gportal.ocara.com' : $url;
+    $js_path =  $host . '/stats/client/visualize.js';
+
+    $libraries['includeJasperForm'] = [
+        'dependencies' => [
+            'core/jquery',
+            'core/jquery.once',
+            'core/drupalSettings'
+        ],
+    ];
+    $libraries['includeJasperForm'] += [
         'version' => '1.x',
         'js' => [
-            $js_path => ['type' => 'external']
+            $js_path => ['type' => 'external'],
+            'js/includeJasperForm.js' => [],
+
         ],
     ];
     return $libraries;
@@ -269,7 +280,8 @@ function gepsis_library_info_build() {
  */
 function gepsis_page_attachments(array &$attachments) {
     $path = \Drupal::service('path.current')->getPath();
-    $host = \Drupal::request()->getSchemeAndHttpHost();
+    $url = \Drupal::request()->getSchemeAndHttpHost();
+    $host = str_contains($url, 'camil.ro') ? 'https://gportal.ocara.com' : $url;
     if ($path == '/node/3' || $path == '/node/8') {
         // TODO : pass parramaeters: https://www.tutorialspoint.com/jasper_reports/jasper_report_parameters.htm
         $userDrupal = User::load(\Drupal::currentUser()->id());
