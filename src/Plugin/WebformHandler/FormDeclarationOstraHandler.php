@@ -164,7 +164,7 @@ class FormDeclarationOstraHandler extends WebformHandlerBase
                     '#weight' => -50
                 );
 
-                $form['actions']['rafraichir'] = [
+                $form['actions']['rafraichir'] = array(
                     '#type' => 'submit',
                     '#value' => t('Je rafraîchis ma déclaration'),
                     '#access' => TRUE,
@@ -174,7 +174,7 @@ class FormDeclarationOstraHandler extends WebformHandlerBase
                     ],
                     // '#limit_validation_errors' => array(),
                     '#weight' => -50,
-                ];
+                );
 
                 // $lineValues['FVALIDATED']['value'] = 1; // TEST
 
