@@ -221,12 +221,12 @@ class FormNouveauTravHandler extends WebformHandlerBase
             case 'new_sal_person_details_wp' : // 1 Preson
                 $age = date_diff(date_create($values['new_sal_birth_date']), date_create(date("Y-m-d")))->y;
                 if ($age < 14) {
-                    $form_state->setErrorByName('new_sal_birth_date', $this->t(utf8_encode('Erreur de date de naissance (salarie ag� de moins de 14 ans)')));
+                    $form_state->setErrorByName('new_sal_birth_date', $this->t('Erreur de date de naissance (salarie agé de moins de 14 ans)'));
                     return;
                 }
 
                 if (!empty($values['new_sal_numero_tel_portable']) && !preg_match('/^[0-9]{10}$/', $values['new_sal_numero_tel_portable'])) {
-                    $form_state->setErrorByName('new_sal_numero_tel_portable', $this->t(utf8_encode('Le format de Mobile transmis par adh�rent n\'est pas respect�')));
+                    $form_state->setErrorByName('new_sal_numero_tel_portable', $this->t('Le format de Mobile transmis par adhérent n\'est pas respecté'));
                     return;
                 }
 
@@ -235,7 +235,7 @@ class FormNouveauTravHandler extends WebformHandlerBase
                     if (!$res) {
                         // Logs a notice
                         \Drupal::logger('gepsis')->notice('NSS INVALID: ' . $values['new_sal_numero_securite_social']);
-                        $form_state->setErrorByName('new_sal_numero_securite_social', $this->t(utf8_encode('Le num�ro de s�curit� sociale n\'est pas valide ! <p><b>Vous pouvez laisser la zone vide et continuer la cr�ation du salari�.</b></p>')));
+                        $form_state->setErrorByName('new_sal_numero_securite_social', $this->t('Le numéro de sécurité sociale n\'est pas valide ! <p><b>Vous pouvez laisser la zone vide et continuer la création du salarie.</b></p>'));
                         return;
                     }
                 }
