@@ -2,39 +2,46 @@ global-styling:
   version: 1.x
   css:
     theme:
-      css/global-styling.css: {}
+      css/global-styling.css: { }
 
 startPage:
   version: 1.x
   css:
     theme:
-      css/startPage.css: {}
-      
+      css/startPage.css: { }
+
 viewStartPage:
   version: 1.x
   css:
     theme:
-      css/viewStartPage.css: {}
-   
+      css/viewStartPage.css: { }
+
 views-select-ligne:
   version: 1.x
   css:
     theme:
-      css/viewsSelectLine.css: {}    
+      css/viewsSelectLine.css: { }
   js:
-    js/views-select-ligne.js: {}
+    js/views-select-ligne.js: { }
+
+gepsis.adh-actif-autocomplete:
+  version: 1.0
+  js:
+    js/adh-actif-autocomplete.js: { }
+  dependencies:
+    - core/jquery
 
 gepsis.replace-autocomplete:
   version: 1.0
   js:
-    js/replace-autocomplete.js: {} 
+    js/replace-autocomplete.js: { }
   dependencies:
     - core/jquery
 
 calculPeriodicite:
   version: 1.0
   js:
-    js/calculPeriodicite.js: {} 
+    js/calculPeriodicite.js: { }
   dependencies:
     - core/jquery
     - core/jquery.once
@@ -45,7 +52,7 @@ calculPeriodicite:
 preprocessTabs:
   version: 1.x
   js:
-    js/preprocessTabs.js: {}
+    js/preprocessTabs.js: { }
   dependencies:
     - core/jquery
 
