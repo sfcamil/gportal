@@ -16,6 +16,7 @@ class CronCreateNewUsersPortal
      * {@inheritdoc}
      */
     public static function process() {
+        return;
         $userLogged = User::load(\Drupal::currentUser()->id());
         \Drupal::logger('gepsis_cron')->notice('CRON Executed at time: ' . date('H:i:s'));
 
