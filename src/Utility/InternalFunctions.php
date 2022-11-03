@@ -37,8 +37,8 @@ class InternalFunctions
                 'type' => 'field_adherents'
             ]);
             $paragraph->set('field_adherent_oid', $adherent->ENTR_O_ID);
-            $paragraph->set('field_code_adherent', $adherent->ENTR_CODE);
-            $paragraph->set('field_nom_adherent', $adherent->ENTR_NOM);
+            $paragraph->set('field_code_adherent', trim($adherent->ENTR_CODE));
+            $paragraph->set('field_nom_adherent', trim($adherent->ENTR_NOM));
             $paragraph->isNew();
             $paragraph->save();
 
@@ -104,12 +104,12 @@ class InternalFunctions
     }
 
     public static function setupTraceInfos(&$customer) {
-        if(is_object($customer))
+        if (is_object($customer))
             $val = $customer;
         else
             $val = $customer[0];
 
-        $val->remoteAddr = empty($_SERVER['REMOTE_ADDR'])?'':$_SERVER['REMOTE_ADDR'];
+        $val->remoteAddr = empty($_SERVER['REMOTE_ADDR']) ? '' : $_SERVER['REMOTE_ADDR'];
         $request = \Drupal::request();
         $val->remoteSession = $request->getSession()->getId();
         $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
