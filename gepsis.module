@@ -19,6 +19,7 @@ use Drupal\Core\Access\AccessResult;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\gepsis\Controller\CronCreateNewUsersPortal;
 
+
 function gepsis_cron() {
     CronCreateNewUsersPortal::process();
 }
@@ -37,6 +38,24 @@ function gepsis_help($route_name, RouteMatchInterface $route_match) {
     }
     return;
 }
+
+/**
+ * Implements hook_menu_local_tasks_alter().
+ */
+function gepsis_menu_local_tasks_alter(&$data, $route_name) {
+    $account = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+    if (strpos($route_name, 'entity.webform.canonical') === 0) {
+        if (isset($data['tabs'])) {
+            // Remove the 'Submissions'
+            if (isset($data['tabs'][0]['entity.webform.results']) && !$account->hasRole('administrator')) {
+                unset(
+                    $data['tabs'][0]['entity.webform.results']
+                );
+            }
+        }
+    }
+}
+
 
 function gepsis_link_alter(&$variables) {
     return;
@@ -255,7 +274,7 @@ function gepsis_library_info_build() {
     $libraries = [];
     $url = \Drupal::request()->getSchemeAndHttpHost();
     $host = str_contains($url, 'camil.ro') ? 'https://gportal.ocara.com' : $url;
-    $js_path =  $host . '/stats/client/visualize.js';
+    $js_path = $host . '/stats/client/visualize.js';
 
     $libraries['includeJasperForm'] = [
         'dependencies' => [
