@@ -146,7 +146,7 @@ class FormAdhContactHandler extends WebformHandlerBase
             }
         }
 
-        $formElements['adh_fire_email_entreprise']['#default_value'] = InternalFunctions::getEmailAssistante();
+        $formElements['contact_fire_email']['#default_value'] = InternalFunctions::getEmailAssistante();
 
         // Disable caching
         $form['#cache']['max-age'] = 0;

@@ -10,6 +10,7 @@ use Drupal\gepsis\Controller\GepsisOdataWriteClass;
 use Drupal\gepsis\Utility\GetAllFunctions;
 use Drupal\gepsis\Utility\InternalFunctions;
 use Drupal\user\Entity\User;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Create a new node entity from a webform submission.
@@ -75,16 +76,10 @@ class FormAdherentHandler extends WebformHandlerBase
      * {@inheritdoc}
      */
     public function validateForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission) {
-        $userInput = $form_state->getUserInput();
+        // $userInput = $form_state->getUserInput();
+        $userInput = $webform_submission->getData();
         if (!$userInput['adh_nom_entreprise'] || empty($userInput['adh_nom_entreprise'])) {
             $form_state->setErrorByName('adh_nom_entreprise', 'Raison sociale est obligatoire.');
-        }
-        return;
-
-        if ($value = $form_state->getValue('element')) {
-            $form_state->setErrorByName('element', $this->t('The element must be empty. You entered %value.', [
-                '%value' => $value,
-            ]));
         }
     }
 
@@ -138,10 +133,11 @@ class FormAdherentHandler extends WebformHandlerBase
         $result->enseigneCommercial = htmlspecialchars($values['adh_description_entreprise'] . ' (' . $now . ')');
         $result->siren = htmlspecialchars($values['adh_siren_entreprise']);
         $result->siret = htmlspecialchars($values['adh_siret_entreprise']);
-        $result->naf = $values['adh_full_naf_entreprise']['select'];
+        $result->naf = $values['adh_full_naf_entreprise'];
         InternalFunctions::setupTraceInfos($result);
         $svc->UpdateObject($result);
         $svc->SaveChanges();
+        return new RedirectResponse('/adherent#lb-tabs-tabs-1');
     }
 
 }
