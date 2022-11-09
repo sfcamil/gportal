@@ -128,7 +128,7 @@ class GetAllFunctions
                 return;
             }
             foreach ($viewListeAllCountries as $value) {
-                $finalListeAllCountries[$value->COUNTRY_OID] = $value->COUNTRY_CODE . ' - ' . $value->COUNTRY_LABEL;
+                $finalListeAllCountries[$value->COUNTRY_OID] = trim($value->COUNTRY_CODE) . ' - ' . trim($value->COUNTRY_LABEL);
             }
             $_SESSION['finalListeAllCountries'] = $finalListeAllCountries;
         }
@@ -143,7 +143,7 @@ class GetAllFunctions
                 return;
             }
             foreach ($viewListeAllContrats as $value) {
-                $finalListeAllContrats[$value->CONTR_O_ID] = $value->CONTR_CODE;
+                $finalListeAllContrats[$value->CONTR_O_ID] = trim($value->CONTR_CODE);
             }
             $_SESSION['finalListeAllContratsCode'] = $finalListeAllContrats;
         }
@@ -158,7 +158,7 @@ class GetAllFunctions
                 return;
             }
             foreach ($viewListeAllContrats as $value) {
-                $finalListeAllContrats[$value->CONTR_O_ID] = $value->CONTR_LABEL;
+                $finalListeAllContrats[$value->CONTR_O_ID] = trim($value->CONTR_LABEL);
             }
             $_SESSION['finalListeAllContratsLabel'] = $finalListeAllContrats;
         }
@@ -174,7 +174,7 @@ class GetAllFunctions
             }
             $finalListeAllExamenTypeArray = array();
             foreach ($customer as $value) {
-                $finalListeAllExamenTypeArray[$value->EX_TYPE_O_ID] = $value->EX_TYPE_LABEL;
+                $finalListeAllExamenTypeArray[$value->EX_TYPE_O_ID] = trim($value->EX_TYPE_LABEL);
             }
             $_SESSION['finalListeAllExamenType'] = $finalListeAllExamenTypeArray;
         }
@@ -204,7 +204,7 @@ class GetAllFunctions
                 return;
             }
             foreach ($viewAllVoieTyp as $value) {
-                $finalAllVoieTyp[$value->VOIE_TYP_OID] = $value->VOIE_TYP_LABEL;
+                $finalAllVoieTyp[$value->VOIE_TYP_OID] = trim($value->VOIE_TYP_LABEL);
             }
             $_SESSION['finalAllVoieTyp'] = $finalAllVoieTyp;
         }
@@ -219,7 +219,7 @@ class GetAllFunctions
                 return;
             }
             foreach ($viewListeAllPostesPcs as $value) {
-                $finalListeAllPostesPcs[$value->POSTE_O_ID] = $value->POSTE_CODE;
+                $finalListeAllPostesPcs[$value->POSTE_O_ID] = trim($value->POSTE_CODE);
             }
             $_SESSION['finalListeAllPostesPcs'] = $finalListeAllPostesPcs;
         }
@@ -234,7 +234,7 @@ class GetAllFunctions
                 return;
             }
             foreach ($viewListeAllPostesPcsLabel as $value) {
-                $finalListeAllPostesPcLabel[$value->POSTE_O_ID] = $value->POSTE_LABEL;
+                $finalListeAllPostesPcLabel[$value->POSTE_O_ID] = trim($value->POSTE_LABEL);
             }
             $_SESSION['finalListeAllPostesPcsLabel'] = $finalListeAllPostesPcLabel;
         }
@@ -250,7 +250,7 @@ class GetAllFunctions
             }
             foreach ($viewListeAllPostesPcsFull as $value) {
                 if (!strpos($value->POSTE_LABEL, 'POSTE GENERIQUE'))
-                    $finalListeAllPostesPcFull[$value->POSTE_O_ID] = $value->POSTE_CODE . ' - ' . $value->POSTE_LABEL;
+                    $finalListeAllPostesPcFull[$value->POSTE_O_ID] = trim($value->POSTE_CODE) . ' - ' . trim($value->POSTE_LABEL);
             }
             $_SESSION['finalListeAllPostesPcsFull'] = $finalListeAllPostesPcFull;
 
@@ -273,7 +273,7 @@ class GetAllFunctions
         $finalListeAllEntrPostesPcs = array();
         foreach ($viewListeAllEntrPostesPcs as $value) {
             if (strpos($value->POSTE_LABEL, 'POSTE GENERIQUE') == false)
-                $finalListeAllEntrPostesPcs[$value->POSTE_ENTR_O_ID] = $value->POSTE_CODE;
+                $finalListeAllEntrPostesPcs[$value->POSTE_ENTR_O_ID] = trim($value->POSTE_CODE);
         }
         return $finalListeAllEntrPostesPcs;
     }
@@ -288,7 +288,7 @@ class GetAllFunctions
         $finalListeAllEntrPostesPcsLabel = array();
         foreach ($viewListeAllEntrPostesPcsLabel as $value) {
             if (strpos($value->POSTE_LABEL, 'POSTE GENERIQUE') == false)
-                $finalListeAllEntrPostesPcsLabel[$value->POSTE_ENTR_O_ID] = $value->POSTE_LABEL;
+                $finalListeAllEntrPostesPcsLabel[$value->POSTE_ENTR_O_ID] = trim($value->POSTE_LABEL);
         }
         return $finalListeAllEntrPostesPcsLabel;
     }
@@ -332,7 +332,7 @@ class GetAllFunctions
                 return;
             }
             foreach ($viewAllTypesAdresses as $value) {
-                $finalTypesAdresses[$value->ADR_O_ID] = $value->ADR_LABEL;
+                $finalTypesAdresses[$value->ADR_O_ID] = trim($value->ADR_LABEL);
             }
             $_SESSION['finalAllTypesAdresses'] = $finalTypesAdresses;
         }
@@ -386,7 +386,7 @@ class GetAllFunctions
             }
             foreach ($viewListeAllTypesRolesLabel as $value) {
                 if ($value != 'Newsletter')
-                    $finalListeAllTypesRolesLabel[$value->TYPE_ROLE_O_ID] = $value->TYPE_ROLE_LABEL;
+                    $finalListeAllTypesRolesLabel[$value->TYPE_ROLE_O_ID] = trim($value->TYPE_ROLE_LABEL);
             }
             $_SESSION['finalListeAllTypesRolesLabel'] = $finalListeAllTypesRolesLabel;
         }
@@ -418,7 +418,7 @@ class GetAllFunctions
                 return;
             }
             foreach ($viewListeAllNafs as $value) {
-                $finalListeAllNafs[$value->NAF_O_ID] = $value->NAF_LABEL;
+                $finalListeAllNafs[$value->NAF_O_ID] = trim($value->NAF_LABEL);
             }
             $_SESSION['finalListeAllNafOIdLabel'] = $finalListeAllNafs;
         }
@@ -448,7 +448,7 @@ class GetAllFunctions
         $finalListeAllPostes = array();
         foreach ($viewListeAllPostes as $key => $value) {
             $finalListeAllPostes[$key]['POSTE_CODE'] = $value->POSTE_CODE;
-            $finalListeAllPostes[$key]['POSTE_LABEL'] = $value->POSTE_LABEL;
+            $finalListeAllPostes[$key]['POSTE_LABEL'] = trim($value->POSTE_LABEL);
         }
         return $finalListeAllPostes;
     }
