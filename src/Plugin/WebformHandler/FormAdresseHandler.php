@@ -86,23 +86,31 @@ class FormAdresseHandler extends WebformHandlerBase
                 $formElements['adrss_complement_1']['#disabled'] = TRUE;
                 $formElements['adrss_complement_2']['#disabled'] = TRUE;
             } else {
-                $form['actions']['delete'] = array(
-                    '#type' => 'submit',
-                    '#value' => t(utf8_encode('Supprimer')),
-                    '#validate' => array(
-                        [
-                            $this,
-                            'gportal_adresse_validate_delete'
-                        ]
-                    ),
-                    '#submit' => array(
-                        [
-                            $this,
-                            'gportal_adresse_delete_delete'
-                        ]
-                    ),
-                    '#weight' => 100
-                );
+                $contact = GepsisOdataReadClass::getOdataClassValues('V1_ENTR_ADHERENT_CONTACT', "ADR_O_ID eq " . $adresseOid, 1);
+                if (!$contact) {
+                    $form['actions']['delete'] = array(
+                        '#type' => 'submit',
+                        '#value' => t(utf8_encode('Supprimer')),
+                        '#validate' => array(
+                            [
+                                $this,
+                                'gportal_adresse_validate_delete'
+                            ]
+                        ),
+                        '#submit' => array(
+                            [
+                                $this,
+                                'gportal_adresse_delete_delete'
+                            ]
+                        ),
+                        '#limit_validation_errors' => array(),
+                        '#weight' => 100
+                    );
+                    $formElements['addr_not_delete_message']['#access'] = FALSE;
+                } else {
+                    $utilisateur = $contact->PERS_NAME . ' ' . $contact->PERS_FIRST_NAME;
+                    $formElements['addr_not_delete_message']['#text'] = str_replace('xxx', $utilisateur, $formElements['addr_not_delete_message']['#text']);
+                }
             }
         } else {
             $form['#title'] = $this->t('Nouvelle adresse');
@@ -144,7 +152,8 @@ class FormAdresseHandler extends WebformHandlerBase
             return;
         else {
             $utilisateur = $contact->PERS_NAME . ' ' . $contact->PERS_FIRST_NAME;
-            $form_state->setErrorByName('', t(utf8_encode('Adresse affect�e �: ' . $utilisateur . '. Vous ne pouvez pas l\'effacer !')));
+            $form_state->setErrorByName('', $this->t('Adresse affectéeé: ' . $utilisateur . '. Vous ne pouvez pas l\'effacer !'));
+            return new RedirectResponse('/adherent#lb-tabs-tabs-3');
         }
     }
 
@@ -173,7 +182,7 @@ class FormAdresseHandler extends WebformHandlerBase
             $svc->DeleteObject($customer);
             $svc->SaveChanges();
         } else
-            $form_state->setErrorByName('', $this->t(utf8_encode('Vous ne pouvais pas effacer cette adresse!')));
+            $form_state->setErrorByName('', $this->t('Vous ne pouvais pas effacer cette adresse!'));
 
         $redirect = new RedirectResponse(Url::fromUserInput('/adherent#lb-tabs-tabs-3')->toString());
         $redirect->send();
