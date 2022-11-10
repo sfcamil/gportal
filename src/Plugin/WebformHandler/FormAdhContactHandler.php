@@ -3,6 +3,7 @@
 namespace Drupal\gepsis\Plugin\WebformHandler;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 use Drupal\gepsis\Controller\GepsisOdataReadClass;
 use Drupal\gepsis\Controller\GepsisOdataWriteClass;
 use Drupal\gepsis\Controller\UserLoginLogoutUtilities;
@@ -127,7 +128,7 @@ class FormAdhContactHandler extends WebformHandlerBase
                             'gportal_adherent_contacts_delete_delete'
                         ]
                     ),
-
+                    '#limit_validation_errors' => array(),
                     '#weight' => 100
                 );
             } else if (count($viewDetailGenContact) <= 1 && in_array($contactGenOid, $contactRoles)) {
@@ -146,7 +147,7 @@ class FormAdhContactHandler extends WebformHandlerBase
             }
         }
 
-        $formElements['adh_fire_email_entreprise']['#default_value'] = InternalFunctions::getEmailAssistante();
+        $formElements['contact_fire_email']['#default_value'] = InternalFunctions::getEmailAssistante();
 
         // Disable caching
         $form['#cache']['max-age'] = 0;
@@ -158,8 +159,7 @@ class FormAdhContactHandler extends WebformHandlerBase
      * {@inheritdoc}
      */
     public function gportal_adherent_contacts_delete_validate(array &$form, FormStateInterface $form_state) {
-        // $userInput = $form_state->getUserInput();
-        return;
+        $formElements = InternalFunctions::getFlattenedForm($form['elements']);
     }
 
     /**
@@ -179,8 +179,10 @@ class FormAdhContactHandler extends WebformHandlerBase
         $svc->UsePostTunneling = FALSE;
         $svc->DeleteObject($customer);
         InternalFunctions::setupTraceInfos($customer);
-        $svc->SaveChanges();
-        return new RedirectResponse('/adherent#lb-tabs-tabs-2');
+         $svc->SaveChanges();
+        // return new RedirectResponse('/adherent#lb-tabs-tabs-2');
+        $redirect = new RedirectResponse(Url::fromUserInput('/adherent#lb-tabs-tabs-2')->toString());
+        $redirect->send();
         // TODO
         // checkAndSetSessFactEmail();
     }
@@ -190,7 +192,7 @@ class FormAdhContactHandler extends WebformHandlerBase
      * {@inheritdoc}
      */
     public function validateForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission) {
-        // $data = $webform_submission->getData();
+        $data = $webform_submission->getData();
         // $userInput = $form_state->getUserInput();
         return;
     }

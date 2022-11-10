@@ -69,6 +69,11 @@ input[type="text"][disabled] {
     background: #e6e6e6;
 }
 
+input[type="date"][disabled] {
+    background: #e6e6e6;
+}
+
+
 /*  PDF VIEWER */
 .node-page.view-mode-full .field-name-field-pdf-reader .field-item {
     width: 100% !important;
@@ -162,7 +167,7 @@ legend {
 
 .select2-container--default .select2-selection--single {
     width: 100% !important;
-    height: 100%;
+    height: 50px;
     padding: 6px;
     box-shadow: inset 0 0 5px rgb(51 44 51/ 10%);
     background-color: #fff;
@@ -186,7 +191,7 @@ legend {
 
 .form-select {
     box-shadow: inset 0 0 5px rgb(51 44 51/ 10%);
-    background-color: #fff;
+    /* background-color: #fff; */
     border: 1px solid #eaeaea !important;
     border-radius: unset;
 }

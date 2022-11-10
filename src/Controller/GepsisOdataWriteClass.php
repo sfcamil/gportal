@@ -8,7 +8,8 @@ use odataPhp\Exception\DataServiceRequestException;
 use odataPhp\Exception\InvalidOperation;
 use odataPhp\Exception\ODataServiceException;
 
-class GepsisOdataWriteClass {
+class GepsisOdataWriteClass
+{
 
     public function __construct($uri = "") {
         // parent::__construct($uri);
@@ -22,14 +23,14 @@ class GepsisOdataWriteClass {
         try {
             $svc = self::prepareWriteClass();
             $query = $filter ? $svc->$class()->filter($filter) : $svc->$class();
-            $result = $count ? $query->Top($count)->Execute() -> Result : $query->Execute() -> Result;
-        } catch ( \Throwable $e ) { // Use Throwable instead of Exception here
+            $result = $count ? $query->Top($count)->Execute()->Result : $query->Execute()->Result;
+        } catch (\Throwable $e) { // Use Throwable instead of Exception here
             \Drupal::logger('gepsis')->error('Error getOdataClassValues write: ' . $e->getMessage());
             // \Drupal::messenger()->addError($e->getMessage());
             // $form_state->setRedirect('<front>');
             return;
         }
-        return $count == 1 ? $result[0] : $result;
+        return $count == 1 ? !empty($result[0]) ? $result[0] : '' : $result;
     }
 
     public static function prepareWriteClass() {
@@ -39,30 +40,30 @@ class GepsisOdataWriteClass {
         try {
             $svc = new GepsFranceWriteEntities($lnk);
             $svc->SetSaveChangesOptions(SaveChangesOptions::None);
-            $svc -> UsePostTunneling = TRUE;
-        } catch ( ODataServiceException $e ) {
+            $svc->UsePostTunneling = TRUE;
+        } catch (ODataServiceException $e) {
             drupal_set_message("Error:   " . $e->getError() . "<br>" . "Detailed Error:" . $e/* -> getDetailedError()*/, 'error');
-        } catch ( DataServiceRequestException $e ) {
-            drupal_set_message($e -> Response->getError(), 'error');
-        } catch ( InvalidOperation $e ) {
+        } catch (DataServiceRequestException $e) {
+            drupal_set_message($e->Response->getError(), 'error');
+        } catch (InvalidOperation $e) {
             drupal_set_message($e->getError(), 'error');
         }
         return $svc;
     }
 
     private static function getWriteClassServer() {
-        if(!isset($_SESSION['finalWriteClassServer'])) {
+        if (!isset($_SESSION['finalWriteClassServer'])) {
             $server = array();
             /** @var \Drupal\Core\Entity\EntityTypeManager $etm */
             $etm = \Drupal::service('entity_type.manager');
             $odata_enities = $etm->getStorage('odata_entity')->loadMultiple();
 
             /** @var \Drupal\odata\Entity\OdataEntity $entity */
-            foreach($odata_enities as $entity) {
-                if(str_contains($entity->getEndpointUrl(), 'GepsFranceWrite'))
+            foreach ($odata_enities as $entity) {
+                if (str_contains($entity->getEndpointUrl(), 'GepsFranceWrite'))
                     $server = $entity->getEndpointUrl();
             }
-            if(empty($server)) {
+            if (empty($server)) {
                 dpm(t('No finalWriteClassServer.'));
                 return;
             }
