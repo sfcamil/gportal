@@ -85,6 +85,7 @@ class FormAdresseHandler extends WebformHandlerBase
                 $formElements['adrss_porte']['#disabled'] = TRUE;
                 $formElements['adrss_complement_1']['#disabled'] = TRUE;
                 $formElements['adrss_complement_2']['#disabled'] = TRUE;
+                $formElements['addr_not_delete_message']['#access'] = FALSE;
             } else {
                 $contact = GepsisOdataReadClass::getOdataClassValues('V1_ENTR_ADHERENT_CONTACT', "ADR_O_ID eq " . $adresseOid, 1);
                 if (!$contact) {
