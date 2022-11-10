@@ -58,6 +58,9 @@ class FormOnlineRDVHandler extends WebformHandlerBase
             $travs[$value->TRAV_O_ID] = array($value->PERS_NAME . ' ' . $value->PERS_FIRST_NAME);
         }
 
+        $rdvLista = GepsisOdataReadClass::getOdataClassValues('V1_ALL_RLP_MEETINGS_AVAILABLE', "MEETING_DETAIL_ID eq " . 17794371100);
+        // V1_ALL_RHP_MEETINGS_AVAILABLE
+
         $formElements['selectionner_un_salarie_online']['#options'] = $travs;
         $formElements['rendez_vous']['#options'] = $travs;
         $formElements['rendez_vous']['#multiple'] = FALSE;
